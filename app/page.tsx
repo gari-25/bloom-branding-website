@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import './page.css';
+import Image from 'next/image';
 
 const HomePage: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -30,36 +31,57 @@ const HomePage: React.FC = () => {
   ];
 
   const portfolio = [
-    { id: 1, title: 'Fashion Brand Revival', category: 'Branding', color: '#003DA5' },
-    { id: 2, title: 'Tech Startup Launch', category: 'Strategy', color: '#892F1A' },
-    { id: 3, title: 'Restaurant Identity', category: 'Design', color: '#BDAF62' },
-    { id: 4, title: 'E-commerce Platform', category: 'Digital', color: '#624A41' }
-  ];
+  {
+    id: 1,
+    title: 'Fashion Brand Revival',
+    category: 'Branding',
+    image: '/portfolio/fashion.jpeg'
+  },
+  {
+    id: 2,
+    title: 'Jewellery Launch',
+    category: 'Strategy',
+    image: '/portfolio/jewellery.jpeg'
+  },
+  {
+    id: 3,
+    title: 'Lifestyle Identity',
+    category: 'Design',
+    image: '/portfolio/lifstyle.jpeg'
+  },
+  {
+    id: 4,
+    title: 'Thyme and whisk',
+    category: 'Digital',
+    image: '/portfolio/restaurant.jpeg'
+  }
+];
+
 
   const stats = [
-    { number: '15+', label: 'Years Experience' },
-    { number: '250+', label: 'Happy Clients' },
-    { number: '500+', label: 'Projects Completed' },
-    { number: '50+', label: 'Awards Won' }
+    { number: '4+', label: 'Years of Experience' },
+    { number: '75+', label: 'Happy Clients' },
+    { number: '100+', label: 'Projects Completed' },
+    
   ];
 
   const testimonials = [
     {
-      text: 'Bloom Branding transformed our vision into reality. Their creative approach and strategic thinking helped us stand out in a crowded market.',
-      author: 'Sarah Johnson',
-      company: 'TechFlow Inc.',
+      text: 'Great work done by these people! One stop for all the assistance needed for digital marketing related work. The employees and all the staff here provide all the guidance to the best of your satisfaction.',
+      author: 'Purva Shah',
+      
       rating: 5
     },
     {
-      text: 'Working with Bloom was an absolute pleasure. They understood our brand DNA and created something truly remarkable.',
-      author: 'Michael Chen',
-      company: 'Urban Eats',
-      rating: 5
+      text: 'I’ve been working with Bloom for past 4-5 months and my experience with them has been great! Both the founders are very creative and also the team is flexible managing shoot timings and dates and accommodating special requests needed be! I’d recommend you take that meeting :)',
+      author: 'Nishant Shah',
+      
+      rating: 4
     },
     {
-      text: 'The attention to detail and creative excellence is unmatched. Our brand has never looked better!',
-      author: 'Emma Davis',
-      company: 'StyleHub',
+      text: 'The bloom branding team is really hardworking and efficient. I am associated with bloom since more than a year now and they have taken my brand’s page from 20k followers to 50k + followers. Looking forward to touching 100k followers and many more effective collabs together. So wish they were in my city though to really make organic content for me as I suck at it myself.',
+      author: 'Mansi Nagdev',
+      
       rating: 5
     }
   ];
@@ -130,7 +152,7 @@ const HomePage: React.FC = () => {
             className="hero-subtitle"
             style={{ opacity: Math.max(0, 1 - scrollY / 300) }}
           >
-            We don't just create brands—we cultivate them. From seed to full bloom,
+            Bringing synergy of aesthetics and expertise to help your brand bloom
             <br />we nurture your vision into a thriving brand that stands out and flourishes.
           </p>
           <div className="hero-cta">
@@ -192,23 +214,29 @@ const HomePage: React.FC = () => {
         </div>
 
         <div className="portfolio-grid">
-          {portfolio.map((project) => (
-            <div key={project.id} className="portfolio-card">
-              <div 
-                className="portfolio-image"
-                style={{ backgroundColor: project.color }}
-              >
-                <div className="portfolio-overlay">
-                  <span className="portfolio-category">{project.category}</span>
-                </div>
-              </div>
-              <div className="portfolio-content">
-                <h3 className="portfolio-title">{project.title}</h3>
-                <button className="portfolio-btn">View Case Study →</button>
-              </div>
-            </div>
-          ))}
+  {portfolio.map((project) => (
+    <div key={project.id} className="portfolio-card">
+      <div className="portfolio-image">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="portfolio-img"
+        />
+        <div className="portfolio-overlay">
+          <span className="portfolio-category">{project.category}</span>
         </div>
+      </div>
+
+      <div className="portfolio-content">
+        <h3 className="portfolio-title">{project.title}</h3>
+        <button className="portfolio-btn"></button>
+      </div>
+    </div>
+  ))}
+</div>
+
 
         <div className="portfolio-footer">
           <button className="view-all-btn">
@@ -313,7 +341,7 @@ const HomePage: React.FC = () => {
           <span className="section-label">Follow Our Journey</span>
           <h2 className="section-title">
             <span className="insta-icon">📷</span>
-            @BloomBranding on Instagram
+            @BLOOM.BRANDING on Instagram
           </h2>
           <p className="section-subtitle">
             Daily inspiration, behind-the-scenes, and brand stories
@@ -399,11 +427,11 @@ const HomePage: React.FC = () => {
               <h4 className="footer-title">Get in Touch</h4>
               <p className="footer-text">
                 <strong>Email:</strong><br />
-                hello@bloombranding.com
+                hello.bloombranding@gmail.com
               </p>
               <p className="footer-text">
                 <strong>Phone:</strong><br />
-                +1 (555) 123-4567
+                97270 68674 | 99095 11226
               </p>
               <p className="footer-text">
                 <strong>Location:</strong><br />
@@ -412,7 +440,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
           <div className="footer-bottom">
-            <p className="copyright">© 2024 Bloom Branding. All rights reserved.</p>
+            <p className="copyright">© 2026 Bloom Branding. All rights reserved.</p>
             <div className="footer-links">
               <a href="#" className="footer-bottom-link">Privacy Policy</a>
               <span className="footer-divider">|</span>
