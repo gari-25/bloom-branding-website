@@ -133,3 +133,124 @@
   color: #555;
   border-radius: 15px;
 }
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.headerContent {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #3a3a3a;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: #1e40af;
+}
+
+.navLinkActive {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.headerBtn {
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+.heroWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 2rem 2rem;
+}
+
+.heroBlueCard {
+  max-width: 900px;
+  width: 100%;
+  padding: 4rem 3rem;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  color: white;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(37, 99, 235, 0.35);
+}
+
+.heroBlueCard h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.heroBlueCard p {
+  font-size: 1.15rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+.heroBlue {
+  background: linear-gradient(
+    135deg,
+    #0a4dbf,
+    #083b93
+  );
+  padding: 6rem 2rem 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heroInner {
+  max-width: 900px;
+  text-align: center;
+  color: #fbf7f2;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  max-width: 760px;
+  margin: 0 auto 1.2rem;
+  opacity: 0.95;
+}
+
+.heroNote {
+  font-size: 1rem;
+  opacity: 0.85;
+}
