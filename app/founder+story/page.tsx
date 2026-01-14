@@ -2,16 +2,42 @@
 
 import { useState, useEffect, useRef } from "react";
 import styles from "./FounderStory.module.css";
+import { db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
+
+interface AboutContent {
+  founderName: string;
+  founderRole: string;
+  bioParagraph1: string;
+  bioParagraph2: string;
+  bioParagraph3: string;
+  imageUrl: string;
+  statExperience: string;
+  statBrands: string;
+  statAwards: string;
+}
 
 const FounderStory: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState(0);
-  const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
+
+  const [content, setContent] = useState<AboutContent>({
+    founderName: "Sarah Chen",
+    founderRole: "Creative Director & Founder",
+    bioParagraph1: "\"I've always believed that branding is more than aesthetics—it's about capturing the essence of a dream and giving it wings to fly.\"",
+    bioParagraph2: "With over 15 years in the creative industry, I've had the privilege of working with startups finding their voice and established brands rediscovering their purpose.",
+    bioParagraph3: "At Bloom Branding, we've created a space where creativity flourishes, where ideas are nurtured, and where every project is an opportunity to make something beautiful and meaningful.",
+    imageUrl: "",
+    statExperience: "15+",
+    statBrands: "200+",
+    statAwards: "50+",
+  });
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
-      
+
       // Detect active section
       sectionsRef.current.forEach((section, index) => {
         if (section) {
@@ -25,6 +51,21 @@ const FounderStory: React.FC = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const docRef = doc(db, "content", "about");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setContent(docSnap.data() as AboutContent);
+        }
+      } catch (error) {
+        console.error("Error fetching about content:", error);
+      }
+    };
+    fetchContent();
   }, []);
 
   const values = [
@@ -53,32 +94,32 @@ const FounderStory: React.FC = () => {
   return (
     <div className={styles.container}>
       <header className="site-header">
-  <div className="header-inner">
-    {/* Logo */}
-    <div className="header-logo">
-      <span className="logo-flower">🌸</span>
-      <span className="logo-text">Bloom Branding</span>
-    </div>
+        <div className="header-inner">
+          {/* Logo */}
+          <div className="header-logo">
+            <span className="logo-flower">🌸</span>
+            <span className="logo-text">Bloom Branding</span>
+          </div>
 
-    {/* Navigation */}
-    <nav className="header-nav">
-      <a href="/ " className="nav-item">Home</a>
-      <a href="/services" className="nav-item">Services</a>
-      <a href="/work" className="nav-item">Our Work</a>
-      <a href="/founder+story" className="nav-item">About</a>
-      <a href="/contact" className="nav-item">Contact</a>
-    </nav>
+          {/* Navigation */}
+          <nav className="header-nav">
+            <a href="/ " className="nav-item">Home</a>
+            <a href="/services" className="nav-item">Services</a>
+            <a href="/work" className="nav-item">Our Work</a>
+            <a href="/founder+story" className="nav-item">About</a>
+            <a href="/contact" className="nav-item">Contact</a>
+          </nav>
 
-    {/* CTA */}
-    <a href="/contact" className="header-cta">
-      Brand Enquiry
-    </a>
-  </div>
-</header>
+          {/* CTA */}
+          <a href="/contact" className="header-cta">
+            Brand Enquiry
+          </a>
+        </div>
+      </header>
 
       {/* Hero Section with 3D Effect */}
       <section className={styles.hero}>
-        <div 
+        <div
           className={styles.heroContent}
           style={{
             transform: `translateY(${scrollY * 0.5}px)`,
@@ -93,7 +134,7 @@ const FounderStory: React.FC = () => {
             A journey of creativity, passion, and growth
           </p>
         </div>
-        <div 
+        <div
           className={styles.heroBackground}
           style={{
             transform: `translateY(${scrollY * 0.3}px) scale(${1 + scrollY * 0.0005})`,
@@ -102,9 +143,9 @@ const FounderStory: React.FC = () => {
       </section>
 
       {/* Story Section */}
-      <section 
+      <section
         className={styles.storySection}
-        ref={(el) => (sectionsRef.current[0] = el)}
+        ref={(el) => { sectionsRef.current[0] = el; }}
       >
         <div className={styles.storyGrid}>
           <div className={styles.storyImage}>
@@ -128,11 +169,11 @@ const FounderStory: React.FC = () => {
       </section>
 
       {/* Philosophy Section with Parallax */}
-      <section 
+      <section
         className={styles.philosophySection}
-        ref={(el) => (sectionsRef.current[1] = el)}
+        ref={(el) => { sectionsRef.current[1] = el; }}
       >
-        <div 
+        <div
           className={styles.philosophyBackground}
           style={{
             transform: `translateY(${scrollY * 0.2}px)`,
@@ -165,15 +206,15 @@ const FounderStory: React.FC = () => {
       </section>
 
       {/* Values Section */}
-      <section 
+      <section
         className={styles.valuesSection}
-        ref={(el) => (sectionsRef.current[2] = el)}
+        ref={(el) => { sectionsRef.current[2] = el; }}
       >
         <span className={styles.sectionLabel}>Our Values</span>
         <h2 className={styles.sectionTitle}>Rooted in Purpose</h2>
         <div className={styles.valuesGrid}>
           {values.map((value, index) => (
-            <div 
+            <div
               key={index}
               className={styles.valueCard}
               style={{
@@ -189,16 +230,22 @@ const FounderStory: React.FC = () => {
       </section>
 
       {/* Founder Section */}
-      <section 
+      <section
         className={styles.founderSection}
-        ref={(el) => (sectionsRef.current[3] = el)}
+        ref={(el) => { sectionsRef.current[3] = el; }}
       >
         <div className={styles.founderGrid}>
           <div className={styles.founderImageContainer}>
             <div className={styles.founderImage}>
-              <div className={styles.founderImagePlaceholder}>
-                <span className={styles.founderIcon}>👤</span>
-              </div>
+              {content.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={content.imageUrl} alt={content.founderName} className="w-full h-full object-cover rounded-[inherit]" />
+              ) : (
+                <div className={styles.founderImagePlaceholder}>
+                  <span className={styles.founderIcon}>👤</span>
+                </div>
+              )}
+
               <div className={styles.floatingElement} style={{ top: '10%', left: '10%' }}>✨</div>
               <div className={styles.floatingElement} style={{ top: '70%', right: '15%' }}>🌟</div>
               <div className={styles.floatingElement} style={{ bottom: '15%', left: '20%' }}>💫</div>
@@ -206,28 +253,28 @@ const FounderStory: React.FC = () => {
           </div>
           <div className={styles.founderContent}>
             <span className={styles.sectionLabel}>Meet the Founder</span>
-            <h2 className={styles.sectionTitle}>Sarah Chen</h2>
-            <p className={styles.founderRole}>Creative Director & Founder</p>
+            <h2 className={styles.sectionTitle}>{content.founderName}</h2>
+            <p className={styles.founderRole}>{content.founderRole}</p>
             <p className={styles.paragraph}>
-              "I've always believed that branding is more than aesthetics—it's about capturing the essence of a dream and giving it wings to fly."
+              {content.bioParagraph1}
             </p>
             <p className={styles.paragraph}>
-              With over 15 years in the creative industry, I've had the privilege of working with startups finding their voice and established brands rediscovering their purpose. My journey began in a small design studio in Mumbai, where I learned that the most powerful brands are those that stay true to their roots while reaching for the sky.
+              {content.bioParagraph2}
             </p>
             <p className={styles.paragraph}>
-              At Bloom Branding, we've created a space where creativity flourishes, where ideas are nurtured, and where every project is an opportunity to make something beautiful and meaningful. This isn't just my company—it's a garden we all tend together.
+              {content.bioParagraph3}
             </p>
             <div className={styles.founderStats}>
               <div className={styles.stat}>
-                <div className={styles.statNumber}>15+</div>
+                <div className={styles.statNumber}>{content.statExperience}</div>
                 <div className={styles.statLabel}>Years Experience</div>
               </div>
               <div className={styles.stat}>
-                <div className={styles.statNumber}>200+</div>
+                <div className={styles.statNumber}>{content.statBrands}</div>
                 <div className={styles.statLabel}>Brands Bloomed</div>
               </div>
               <div className={styles.stat}>
-                <div className={styles.statNumber}>50+</div>
+                <div className={styles.statNumber}>{content.statAwards}</div>
                 <div className={styles.statLabel}>Awards Won</div>
               </div>
             </div>
@@ -236,9 +283,9 @@ const FounderStory: React.FC = () => {
       </section>
 
       {/* Journey Timeline */}
-      <section 
+      <section
         className={styles.timelineSection}
-        ref={(el) => (sectionsRef.current[4] = el)}
+        ref={(el) => { sectionsRef.current[4] = el; }}
       >
         <span className={styles.sectionLabel}>The Journey</span>
         <h2 className={styles.sectionTitle}>Our Growth Story</h2>
@@ -298,63 +345,63 @@ const FounderStory: React.FC = () => {
           <span className={styles.flower}>🌷</span>
         </div>
       </section>
-          {/* Footer */}
-<footer className="footer">
-  <div className="footer-content">
-    <div className="footer-grid">
-      <div className="footer-col">
-        <h3 className="footer-logo">
-          <span className="logo-icon">🌸</span>
-          Bloom Branding
-        </h3>
-        <p className="footer-text">
-          Cultivating brands that flourish. We help businesses grow from seed to full bloom.
-        </p>
-        <div className="social-icons">
-          <a href="#" className="social-icon">📘</a>
-          <a href="#" className="social-icon">📷</a>
-          <a href="#" className="social-icon">🐦</a>
-          <a href="#" className="social-icon">💼</a>
-        </div>
-      </div>
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-grid">
+            <div className="footer-col">
+              <h3 className="footer-logo">
+                <span className="logo-icon">🌸</span>
+                Bloom Branding
+              </h3>
+              <p className="footer-text">
+                Cultivating brands that flourish. We help businesses grow from seed to full bloom.
+              </p>
+              <div className="social-icons">
+                <a href="#" className="social-icon">📘</a>
+                <a href="#" className="social-icon">📷</a>
+                <a href="#" className="social-icon">🐦</a>
+                <a href="#" className="social-icon">💼</a>
+              </div>
+            </div>
 
-      <div className="footer-col">
-        <h4 className="footer-title">Services</h4>
-        <a href="#" className="footer-link">Brand Strategy</a>
-        <a href="#" className="footer-link">Content Creation</a>
-        <a href="#" className="footer-link">Production</a>
-        <a href="#" className="footer-link">Social Media</a>
-        <a href="#" className="footer-link">Digital Experiences</a>
-      </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Services</h4>
+              <a href="#" className="footer-link">Brand Strategy</a>
+              <a href="#" className="footer-link">Content Creation</a>
+              <a href="#" className="footer-link">Production</a>
+              <a href="#" className="footer-link">Social Media</a>
+              <a href="#" className="footer-link">Digital Experiences</a>
+            </div>
 
-      <div className="footer-col">
-        <h4 className="footer-title">Company</h4>
-        <a href="#" className="footer-link">About Us</a>
-        <a href="#" className="footer-link">Our Work</a>
-        <a href="#" className="footer-link">Our Story</a>
-        <a href="#" className="footer-link">Careers</a>
-        <a href="#" className="footer-link">Contact</a>
-      </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Company</h4>
+              <a href="#" className="footer-link">About Us</a>
+              <a href="#" className="footer-link">Our Work</a>
+              <a href="#" className="footer-link">Our Story</a>
+              <a href="#" className="footer-link">Careers</a>
+              <a href="#" className="footer-link">Contact</a>
+            </div>
 
-      <div className="footer-col">
-        <h4 className="footer-title">Get in Touch</h4>
-        <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
-        <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
-        <p className="footer-text"><strong>Location:</strong><br />123 Creative Street, Design City</p>
-      </div>
-    </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Get in Touch</h4>
+              <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
+              <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
+              <p className="footer-text"><strong>Location:</strong><br />123 Creative Street, Design City</p>
+            </div>
+          </div>
 
-    <div className="footer-bottom">
-      <p className="copyright">© 2026 Bloom Branding. All rights reserved.</p>
-      <div className="footer-links">
-        <a href="#" className="footer-bottom-link">Privacy Policy</a>
-        <span className="footer-divider">|</span>
-        <a href="#" className="footer-bottom-link">Terms of Service</a>
-        <span className="footer-divider">|</span>
-        <a href="#" className="footer-bottom-link">Cookie Policy</a>
-      </div>
-    </div>
-    <style>{`
+          <div className="footer-bottom">
+            <p className="copyright">© 2026 Bloom Branding. All rights reserved.</p>
+            <div className="footer-links">
+              <a href="#" className="footer-bottom-link">Privacy Policy</a>
+              <span className="footer-divider">|</span>
+              <a href="#" className="footer-bottom-link">Terms of Service</a>
+              <span className="footer-divider">|</span>
+              <a href="#" className="footer-bottom-link">Cookie Policy</a>
+            </div>
+          </div>
+          <style>{`
 .footer {
   background: #624A41;
   color: #E8E4D9;
@@ -444,8 +491,8 @@ const FounderStory: React.FC = () => {
 }
 `}</style>
 
-  </div>
-</footer>
+        </div>
+      </footer>
     </div>
   );
 };

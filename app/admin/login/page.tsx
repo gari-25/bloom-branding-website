@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { login } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,8 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      alert("Logged in successfully ✅");
+      // Success is handled by auth state observer in layout, but we push just in case
+      router.push("/admin/dashboard");
     } catch {
       setError("Invalid email or password");
     } finally {
@@ -24,40 +27,55 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-neutral-900 rounded-2xl p-8 shadow-lg">
-        <h1 className="text-3xl font-semibold mb-2 text-center">
-          Admin Login
-        </h1>
-        <p className="text-neutral-400 text-sm mb-6 text-center">
-          Bloom Branding CMS Access
-        </p>
+    <main className="min-h-screen flex items-center justify-center px-4 bg-[#FBF7F4] relative overflow-hidden">
+      {/* Decorative Shapes */}
+      <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[#003DA5]/20 to-[#BDAF62]/20 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#892F1A]/10 to-[#003DA5]/10 blur-[80px] pointer-events-none" />
 
-        <div className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email address"
-            className="w-full rounded-lg bg-neutral-800 border border-neutral-700 px-4 py-3 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-white/20"
-            onChange={(e) => setEmail(e.target.value)}
-          />
+      <div className="w-full max-w-md bg-white/80 backdrop-blur-xl rounded-3xl p-10 shadow-2xl border border-white/50 relative z-10 transition-all hover:shadow-[0_20px_60px_rgba(0,0,0,0.05)]">
+        <div className="text-center mb-8">
+          <span className="text-5xl mb-4 block">🌸</span>
+          <h1 className="text-3xl font-bold text-[#3D2925] mb-2 tracking-tight">
+            Welcome Back
+          </h1>
+          <p className="text-[#624A41] text-sm font-medium">
+            Sign in to manage Bloom Branding
+          </p>
+        </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full rounded-lg bg-neutral-800 border border-neutral-700 px-4 py-3 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-white/20"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <div className="space-y-5">
+          <div>
+            <label className="block text-xs font-bold text-[#3D2925]/70 uppercase tracking-wider mb-2 ml-1">Email</label>
+            <input
+              type="email"
+              placeholder="admin@bloom.com"
+              className="w-full rounded-xl bg-white border border-[#3D2925]/10 px-5 py-3 text-[#3D2925] placeholder-[#3D2925]/30 focus:outline-none focus:ring-2 focus:ring-[#003DA5]/20 focus:border-[#003DA5] transition-all"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-[#3D2925]/70 uppercase tracking-wider mb-2 ml-1">Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full rounded-xl bg-white border border-[#3D2925]/10 px-5 py-3 text-[#3D2925] placeholder-[#3D2925]/30 focus:outline-none focus:ring-2 focus:ring-[#003DA5]/20 focus:border-[#003DA5] transition-all"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
           {error && (
-            <p className="text-red-400 text-sm text-center">{error}</p>
+            <div className="p-3 rounded-lg bg-red-50 border border-red-100 text-red-600 text-sm text-center font-medium animate-pulse">
+              {error}
+            </div>
           )}
 
           <button
             onClick={handleLogin}
             disabled={loading}
-            className="w-full mt-2 rounded-lg bg-white text-black py-3 font-medium hover:bg-neutral-200 transition disabled:opacity-50"
+            className="w-full mt-2 rounded-full bg-[#892F1A] text-white py-4 font-bold text-lg hover:bg-[#6b2415] hover:shadow-lg hover:-translate-y-1 active:translate-y-0 transition-all disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Signing in..." : "Enter Dashboard →"}
           </button>
         </div>
       </div>
