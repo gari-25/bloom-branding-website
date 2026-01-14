@@ -19,7 +19,7 @@ const ServicesPage: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -482,7 +482,9 @@ const navLinkStyle = (scrollY: number) => ({
       {services.map((service, index) => (
         <section
           key={service.id}
-          ref={el => sectionRefs.current[index] = el}
+ref={(el) => {
+  sectionRefs.current[index] = el;
+}}
           style={{
             minHeight: '100vh',
             display: 'flex',

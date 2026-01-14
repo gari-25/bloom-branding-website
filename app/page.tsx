@@ -106,9 +106,12 @@ const testimonials: Testimonial[] = [
 
 
   const clients = [
-    'TechFlow', 'StyleHub', 'Urban Eats', 'GreenLeaf', 'NovaLabs', 'CloudNine', 
-    'PureEssence', 'BrightPath', 'EcoWave', 'Zenith', 'Fusion', 'Stellar'
+    'Thyme and whisk', 'Kaffyn', 'Amar - fastfood center', "life's a beach", 'ShoP', "B'there", 
+    'The Right Cut', 'Binal Patel', 'SubhRekha', 'Mansi Nagdev', 'Dhruv Gems', 'Vardhaman Diam'
   ];
+
+  // Thyme and whisk, kaffyn, amar - fastfood center, life's a beach, ShoP, B'there, The Right Cut, 
+  // Binal Patel,  SubhRekha, Mansi Nagdev, Dhruv Gems, Bafna Marble, Vardhaman Diam, AMBC Gems
 
   const instaPosts = [
     { id: 1, color: '#003DA5' },
@@ -396,11 +399,17 @@ const testimonials: Testimonial[] = [
 </div>
 
         <div className="insta-footer">
-          <button className="insta-btn">
-            <span className="insta-icon-small">📱</span>
-            Follow Us on Instagram
-          </button>
-        </div>
+  <a
+    href="https://www.instagram.com/bloom.branding_/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="insta-btn"
+  >
+    <span className="insta-icon-small">📱</span>
+    Follow Us on Instagram
+  </a>
+</div>
+
       </section>
 
       {/* CTA Section */}
