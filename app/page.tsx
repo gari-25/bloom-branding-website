@@ -22,6 +22,17 @@ const HomePage: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+  const script = document.createElement("script");
+  script.src = "https://www.instagram.com/embed.js";
+  script.async = true;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+
   const services = [
     { icon: '🎯', title: 'Brand Strategy', desc: 'Strategic foundations that resonate' },
     { icon: '✨', title: 'Content Creation', desc: 'Stories that captivate and convert' },
@@ -65,26 +76,34 @@ const HomePage: React.FC = () => {
     
   ];
 
-  const testimonials = [
-    {
-      text: 'Great work done by these people! One stop for all the assistance needed for digital marketing related work. The employees and all the staff here provide all the guidance to the best of your satisfaction.',
-      author: 'Purva Shah',
-      
-      rating: 5
-    },
-    {
-      text: 'I’ve been working with Bloom for past 4-5 months and my experience with them has been great! Both the founders are very creative and also the team is flexible managing shoot timings and dates and accommodating special requests needed be! I’d recommend you take that meeting :)',
-      author: 'Nishant Shah',
-      
-      rating: 4
-    },
-    {
-      text: 'The bloom branding team is really hardworking and efficient. I am associated with bloom since more than a year now and they have taken my brand’s page from 20k followers to 50k + followers. Looking forward to touching 100k followers and many more effective collabs together. So wish they were in my city though to really make organic content for me as I suck at it myself.',
-      author: 'Mansi Nagdev',
-      
-      rating: 5
-    }
-  ];
+  type Testimonial = {
+  text: string;
+  author: string;
+  company: string;
+  rating: number;
+};
+
+const testimonials: Testimonial[] = [
+  {
+    text: 'Great work done by these people! One stop for all the assistance needed for digital marketing related work. The employees and all the staff here provide all the guidance to the best of your satisfaction.',
+    author: 'Purva Shah',
+    company: 'Lifestyle Brand',
+    rating: 5
+  },
+  {
+    text: 'I’ve been working with Bloom for past 4-5 months and my experience with them has been great! Both the founders are very creative and also the team is flexible managing shoot timings and dates and accommodating special requests needed be! I’d recommend you take that meeting :)',
+    author: 'Nishant Shah',
+    company: 'Startup Founder',
+    rating: 4
+  },
+  {
+    text: 'The bloom branding team is really hardworking and efficient. I am associated with bloom since more than a year now and they have taken my brand’s page from 20k followers to 50k + followers. Looking forward to touching 100k followers and many more effective collabs together.',
+    author: 'Mansi Nagdev',
+    company: 'Content Creator',
+    rating: 5
+  }
+];
+
 
   const clients = [
     'TechFlow', 'StyleHub', 'Urban Eats', 'GreenLeaf', 'NovaLabs', 'CloudNine', 
@@ -341,7 +360,7 @@ const HomePage: React.FC = () => {
           <span className="section-label">Follow Our Journey</span>
           <h2 className="section-title">
             <span className="insta-icon">📷</span>
-            @BLOOM.BRANDING on Instagram
+            @BloomBranding on Instagram
           </h2>
           <p className="section-subtitle">
             Daily inspiration, behind-the-scenes, and brand stories
@@ -349,22 +368,32 @@ const HomePage: React.FC = () => {
         </div>
 
         <div className="insta-grid">
-          {instaPosts.map((post) => (
-            <a
-              key={post.id}
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="insta-post"
-              style={{ backgroundColor: post.color }}
-            >
-              <div className="insta-overlay">
-                <span className="insta-icon-small">❤️</span>
-                <span className="insta-likes">1.2K</span>
-              </div>
-            </a>
-          ))}
-        </div>
+
+  <blockquote
+    className="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/reel/C62yD1UNiZf/?utm_source=ig_embed&amp;utm_campaign=loading"
+    data-instgrm-version="14"
+  ></blockquote>
+
+  <blockquote
+    className="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/reel/DMsJ2MVozcW/?utm_source=ig_embed&amp;utm_campaign=loading"
+    data-instgrm-version="14"
+  ></blockquote>
+
+  <blockquote
+    className="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/reel/C4Sybe_NrDO/?utm_source=ig_embed&amp;utm_campaign=loading"
+    data-instgrm-version="14"
+  ></blockquote>
+
+  <blockquote
+    className="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/reel/C6dtVd-NksW/?utm_source=ig_embed&amp;utm_campaign=loading"
+    data-instgrm-version="14"
+  ></blockquote>
+
+</div>
 
         <div className="insta-footer">
           <button className="insta-btn">
