@@ -28,7 +28,23 @@
   0%, 100% { opacity: 0.6; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.05); }
 }
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-18px) translateX(6px);
+  }
+}
 
+@keyframes floatSoftReverse {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-22px) translateX(-6px);
+  }
+}
 /* Header */
 .header {
   position: fixed;
@@ -268,41 +284,40 @@
 /* Floating Elements */
 .floating-elements {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
+  z-index: 0;
 }
 
 .floating-item {
   position: absolute;
-  font-size: 48px;
-  opacity: 0.6;
+  font-size: 52px;
+  opacity: 0.65;
+  filter: blur(0.2px);
 }
 
+
 .float-1 {
-  top: 20%;
-  left: 10%;
-  animation: float 6s ease-in-out infinite;
+  top: 18%;
+  left: 8%;
+  animation: floatSoft 8s ease-in-out infinite;
 }
 
 .float-2 {
-  top: 30%;
-  right: 15%;
-  animation: float2 7s ease-in-out infinite;
+  top: 26%;
+  right: 12%;
+  animation: floatSoftReverse 9s ease-in-out infinite;
 }
 
 .float-3 {
-  bottom: 25%;
-  left: 20%;
-  animation: float3 8s ease-in-out infinite;
+  bottom: 28%;
+  left: 18%;
+  animation: floatSoft 10s ease-in-out infinite;
 }
-
 .float-4 {
   bottom: 20%;
   right: 10%;
-  animation: float 9s ease-in-out infinite;
+  animation: floatSoftReverse 11s ease-in-out infinite;
 }
 
 /* Section Styles */
@@ -313,7 +328,7 @@
 
 .section-label {
   display: inline-block;
-  font-size: 14px;
+  font-size: 25px;
   font-weight: 700;
   color: #003DA5;
   text-transform: uppercase;
@@ -535,24 +550,37 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 60px;
+  gap: 60px;align-items: center;
 }
 
 .stat-card {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stat-number {
-  font-size: 64px;
+  font-size: 72px;
   font-weight: 900;
   color: #BDAF62;
-  margin-bottom: 10px;
+  line-height: 1;
+  margin-bottom: 14px;
+margin-left: 230px;
+  /* REAL FIX */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: translateX(-2px); /* optical correction */
 }
+
 
 .stat-label {
   font-size: 16px;
   color: rgba(251, 247, 244, 0.9);
   font-weight: 600;
+  margin-left: 200px;
 }
 
 .stat-bar {
@@ -561,6 +589,7 @@
   background-color: #BDAF62;
   margin: 20px auto 0;
   border-radius: 2px;
+  margin-left: 250px;
 }
 
 /* Reviews Section */
@@ -639,6 +668,11 @@
   font-size: 24px;
   font-weight: 700;
   color: #FFFFFF;
+}
+/* Remove blue underline & default link color */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .author-name {
@@ -723,13 +757,29 @@
   margin-right: 10px;
 }
 
+/* FORCE CENTER INSTAGRAM EMBEDS — FINAL FIX */
 .insta-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center !important;
+  align-items: center;
+  gap: 30px;
 }
+
+/* Instagram blockquote wrapper */
+.insta-grid blockquote.instagram-media {
+  margin: 0 !important;
+  max-width: 320px !important;
+  width: 320px !important;
+  display: flex !important;
+  justify-content: center;
+}
+
+/* Instagram iframe itself */
+.insta-grid iframe {
+  margin: 0 auto !important;
+}
+
 
 .insta-post {
   aspect-ratio: 1;
@@ -799,7 +849,7 @@
 /* CTA Section */
 .cta-section {
   padding: 120px 40px;
-  background: linear-gradient(135deg, #892F1A 0%, #624A41 100%);
+  background: #003e95;
   position: relative;
   overflow: hidden;
 }
@@ -1026,6 +1076,61 @@
   opacity: 0.4;
   z-index: 0;
 }
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fffaf6;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  object-fit: contain;
+}
+
+.main-logo-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px 40px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 236, 220, 0.6),
+    transparent 70%
+  );
+}
+
+.main-logo {
+  max-width: 320px;
+  height: auto;
+  animation: fadeScale 0.8s ease forwards;
+}
+
+@keyframes fadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 
 .paper-cutout.top-left {
   top: 0;

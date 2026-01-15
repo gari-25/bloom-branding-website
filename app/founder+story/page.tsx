@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef} from "react";
 import styles from "./FounderStory.module.css";
-
+import Link from "next/link";
 const FounderStory: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState(0);
@@ -26,6 +26,13 @@ const FounderStory: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+const navLinkStyle = (scrollY: number) => ({
+  color: scrollY > 50 ? "#fff" : "#ccc",
+  textDecoration: "none",
+  fontSize: "1rem",
+  fontWeight: 500,
+  transition: "color 0.3s ease",
+});
 
   const values = [
     {
@@ -52,29 +59,52 @@ const FounderStory: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <header className="site-header">
-  <div className="header-inner">
-    {/* Logo */}
-    <div className="header-logo">
-      <span className="logo-flower">🌸</span>
-      <span className="logo-text">Bloom Branding</span>
-    </div>
+    {/* Header */}
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        background: scrollY > 50 ? '#624A41' : 'transparent',
+        backdropFilter: scrollY > 50 ? 'blur(10px)' : 'none',
+        transition: 'all 0.3s ease',
+        borderBottom: scrollY > 50 ? '1px solid rgba(244, 232, 178, 0.2)' : 'none'
+      }}>
+        <div style={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          padding: '1.5rem 2rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}>
+           
+            <span style={{
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              color: scrollY > 50 ? '#F4E8B2' : '#4A4A4A',
+              transition: 'color 0.3s ease'
+            }}>
+              Bloom Branding
+            </span>
+          </div>
+          
+         <nav style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
+          <Link href="/" style={navLinkStyle(scrollY)}>Home</Link>
+  <Link href="/services" style={navLinkStyle(scrollY)}>Services</Link>
+  <Link href="/founder+story" style={navLinkStyle(scrollY)}>About</Link>
+  <Link href="/work" style={navLinkStyle(scrollY)}>Work</Link>
+  <Link href="/contact" style={navLinkStyle(scrollY)}>Contact</Link>
+</nav>
 
-    {/* Navigation */}
-    <nav className="header-nav">
-      <a href="/ " className="nav-item">Home</a>
-      <a href="/services" className="nav-item">Services</a>
-      <a href="/work" className="nav-item">Our Work</a>
-      <a href="/founder+story" className="nav-item">About</a>
-      <a href="/contact" className="nav-item">Contact</a>
-    </nav>
-
-    {/* CTA */}
-    <a href="/contact" className="header-cta">
-      Brand Enquiry
-    </a>
-  </div>
-</header>
+        </div>
+      </header>
 
       {/* Hero Section with 3D Effect */}
       <section className={styles.hero}>

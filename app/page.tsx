@@ -40,6 +40,8 @@ const HomePage: React.FC = () => {
     { icon: '📱', title: 'Social Media', desc: 'Build communities, not followers' },
     { icon: '💻', title: 'Digital Experiences', desc: 'Interfaces that inspire' }
   ];
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
 
   const portfolio = [
   {
@@ -125,9 +127,16 @@ const testimonials: Testimonial[] = [
       <header className="header">
         <div className="header-content">
           <div className="logo">
-            <span className="logo-icon">🌸</span>
-            Bloom Branding
-          </div>
+  <Image
+    src="/portfolio/logo.png"
+    alt="Bloom Branding Logo"
+    width={80}
+    height={60}
+    priority
+  />
+  
+</div>
+
           <nav className="nav">
             <a href="#home" className="nav-link">Home</a>
             <a href="/services" className="nav-link">Services</a>
@@ -138,59 +147,92 @@ const testimonials: Testimonial[] = [
           <button className="header-btn">Brand Enquiry</button>
         </div>
       </header>
+      {/* Main Logo Section */}
+<section className="main-logo-section">
+  <Image
+    src="/portfolio/main-logo.png"
+    alt="Bloom Branding Main Logo"
+    width={1720}
+    height={620}
+    className="main-logo"
+    priority
+  />
+</section>
 
-      {/* Floating Background */}
-      <div className="bg-shapes">
-        <div className="shape shape-1"></div>
-        <div className="shape shape-2"></div>
-        <div className="shape shape-3"></div>
-      </div>
 
-      {/* Hero Banner */}
-      <section className="hero">
-        <div className="hero-content">
-          <div 
-            className="hero-tag"
-            style={{
-              transform: `translateY(${Math.min(scrollY * 0.3, 50)}px)`,
-              opacity: Math.max(0, 1 - scrollY / 400)
-            }}
-          >
-            <span className="tag-dot"></span>
-            Where Brands Bloom
-          </div>
-          <h1 
-            className="hero-title"
-            style={{ transform: `translateY(${scrollY * 0.2}px)` }}
-          >
-            <span className="title-line">Blooming</span>
-            <span className="title-accent">Your Brand</span>
-            <span className="title-line">Into Greatness</span>
-          </h1>
-          <p 
-            className="hero-subtitle"
-            style={{ opacity: Math.max(0, 1 - scrollY / 300) }}
-          >
-            Bringing synergy of aesthetics and expertise to help your brand bloom
-            <br />we nurture your vision into a thriving brand that stands out and flourishes.
-          </p>
-          <div className="hero-cta">
-            <button className="primary-btn">
-              Start Your Journey
-              <span className="btn-arrow">→</span>
-            </button>
-            <button className="secondary-btn">View Our Work</button>
-          </div>
-        </div>
-        
-        {/* Animated Brand Elements */}
-        <div className="floating-elements">
-          <div className="floating-item float-1">🌱</div>
-          <div className="floating-item float-2">🌸</div>
-          <div className="floating-item float-3">✨</div>
-          <div className="floating-item float-4">🎨</div>
-        </div>
-      </section>
+     {/* Hero Banner */}
+<section className="hero">
+  <div
+    className="hero-content"
+    style={{
+      transform: `translateY(${clamp(scrollY * 0.15, 0, 60)}px)`,
+      transition: "transform 0.2s ease-out",
+    }}
+  >
+    {/* Tag */}
+    <div
+      className="hero-tag"
+      style={{
+        transform: `translateY(${clamp(scrollY * 0.08, 0, 30)}px)`,
+        opacity: clamp(1 - scrollY / 350, 0, 1),
+        transition: "all 0.2s ease-out",
+      }}
+    >
+      <span className="tag-dot"></span>
+      Where Brands Bloom
+    </div>
+
+    {/* Title */}
+    <h1
+      className="hero-title"
+      style={{
+        transform: `translateY(${clamp(scrollY * 0.12, 0, 50)}px)`,
+        transition: "transform 0.25s ease-out",
+      }}
+    >
+      <span className="title-line">Blooming</span>
+      <span className="title-accent">Your Brand</span>
+      <span className="title-line">Into Greatness</span>
+    </h1>
+
+    {/* Subtitle */}
+    <p
+      className="hero-subtitle"
+      style={{
+        opacity: clamp(1 - scrollY / 280, 0, 1),
+        transform: `translateY(${clamp(scrollY * 0.1, 0, 40)}px)`,
+        transition: "all 0.25s ease-out",
+      }}
+    >
+      Bringing synergy of aesthetics and expertise to help your brand bloom
+      <br />
+      we nurture your vision into a thriving brand that stands out and flourishes.
+    </p>
+
+    {/* CTA */}
+    <div
+      className="hero-cta"
+      style={{
+        transform: `translateY(${clamp(scrollY * 0.05, 0, 20)}px)`,
+        transition: "transform 0.3s ease-out",
+      }}
+    >
+      <button className="primary-btn">
+        Start Your Journey <span className="btn-arrow">→</span>
+      </button>
+      <button className="secondary-btn">View Our Work</button>
+    </div>
+  </div>
+
+  {/* Floating Elements */}
+  <div className="floating-elements">
+    <div className="floating-item float-1">🌱</div>
+    <div className="floating-item float-2">🌸</div>
+    <div className="floating-item float-3">✨</div>
+    <div className="floating-item float-4">🎨</div>
+  </div>
+</section>
+
 
       {/* Services Section */}
       <section className="services-section" id="services">
@@ -360,7 +402,7 @@ const testimonials: Testimonial[] = [
           <span className="section-label">Follow Our Journey</span>
           <h2 className="section-title">
             <span className="insta-icon">📷</span>
-            @BloomBranding on Instagram
+            @bloom.branding_ on Instagram
           </h2>
           <p className="section-subtitle">
             Daily inspiration, behind-the-scenes, and brand stories
@@ -398,7 +440,14 @@ const testimonials: Testimonial[] = [
         <div className="insta-footer">
           <button className="insta-btn">
             <span className="insta-icon-small">📱</span>
-            Follow Us on Instagram
+            <a
+  href="https://www.instagram.com/bloom.branding_/"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Follow Us on Instagram
+</a>
+            
           </button>
         </div>
       </section>
@@ -446,17 +495,21 @@ const testimonials: Testimonial[] = [
             </div>
             <div className="footer-col">
               <h4 className="footer-title">Company</h4>
-              <a href="#" className="footer-link">About Us</a>
-              <a href="#" className="footer-link">Our Work</a>
-              <a href="#" className="footer-link">Our Story</a>
-              <a href="#" className="footer-link">Careers</a>
-              <a href="#" className="footer-link">Contact</a>
+              <a href="/founder+story" className="footer-link">About Us</a>
+              <a href="/work" className="footer-link">Our Work</a>
+              <a href="/founder+story" className="footer-link">Our Story</a>
+              <a href="/services" className="footer-link">Services</a>
+              <a href="/contact" className="footer-link">Contact</a>
             </div>
             <div className="footer-col">
               <h4 className="footer-title">Get in Touch</h4>
               <p className="footer-text">
                 <strong>Email:</strong><br />
-                hello.bloombranding@gmail.com
+               <a href="mailto:hello.bloombranding@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">
+  Email Us
+</a>
+
+                
               </p>
               <p className="footer-text">
                 <strong>Phone:</strong><br />

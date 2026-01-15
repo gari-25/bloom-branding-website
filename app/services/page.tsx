@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from "next/link";
-
+import Image from 'next/image';
 interface Service {
   id: number;
   title: string;
@@ -198,6 +198,7 @@ const navLinkStyle = (scrollY: number) => ({
 
         </div>
       </header>
+
 
       {/* Hero Section with Enhanced 3D Elements */}
       <section style={{
