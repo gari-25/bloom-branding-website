@@ -63,8 +63,8 @@ export default function AddTestimonialPage() {
                         type="button"
                         onClick={() => setFormData({ ...formData, type: "text" })}
                         className={`flex-1 py-3 rounded-lg font-bold transition-all ${formData.type === "text"
-                                ? "bg-white text-[#003DA5] shadow-sm"
-                                : "text-[#3D2925]/50 hover:text-[#3D2925]"
+                            ? "bg-white text-[#003DA5] shadow-sm"
+                            : "text-[#3D2925]/50 hover:text-[#3D2925]"
                             }`}
                     >
                         📝 Text Review
@@ -73,8 +73,8 @@ export default function AddTestimonialPage() {
                         type="button"
                         onClick={() => setFormData({ ...formData, type: "video" })}
                         className={`flex-1 py-3 rounded-lg font-bold transition-all ${formData.type === "video"
-                                ? "bg-white text-[#892F1A] shadow-sm"
-                                : "text-[#3D2925]/50 hover:text-[#3D2925]"
+                            ? "bg-white text-[#892F1A] shadow-sm"
+                            : "text-[#3D2925]/50 hover:text-[#3D2925]"
                             }`}
                     >
                         🎥 Video Review
@@ -129,18 +129,22 @@ export default function AddTestimonialPage() {
                 )}
 
                 <div>
-                    <label className="block text-xs font-bold text-[#3D2925]/70 uppercase tracking-wider mb-2 ml-1">Rating (1-5)</label>
-                    <div className="flex gap-4 items-center">
-                        <input
-                            type="range"
-                            min="1"
-                            max="5"
-                            step="1"
-                            className="w-full h-2 bg-[#FBF7F4] rounded-lg appearance-none cursor-pointer accent-[#003DA5]"
-                            value={formData.rating}
-                            onChange={(e) => setFormData({ ...formData, rating: Number(e.target.value) })}
-                        />
-                        <span className="text-2xl font-bold text-[#003DA5] w-8 text-center">{formData.rating}</span>
+                    <label className="block text-xs font-bold text-[#3D2925]/70 uppercase tracking-wider mb-2 ml-1">Rating</label>
+                    <div className="flex gap-2 items-center">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                                key={star}
+                                type="button"
+                                onClick={() => setFormData({ ...formData, rating: star })}
+                                className={`text-4xl transition-all hover:scale-110 focus:outline-none ${star <= formData.rating ? "grayscale-0" : "grayscale opacity-20"
+                                    }`}
+                            >
+                                ⭐
+                            </button>
+                        ))}
+                        <span className="ml-3 text-lg font-bold text-[#003DA5] bg-[#003DA5]/5 px-3 py-1 rounded-lg">
+                            {formData.rating}.0
+                        </span>
                     </div>
                 </div>
 
