@@ -3,11 +3,51 @@
 import React, { useState, useEffect } from 'react';
 import './page.css';
 import Image from 'next/image';
+import { db } from "@/lib/firebase";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+
+interface Testimonial {
+  id: string;
+  name: string;
+  company: string;
+  content: string;
+  rating: number;
+  videoUrl?: string;
+  type: "text" | "video";
+  isActive: boolean;
+}
+
+interface Brand {
+  id: string;
+  name: string;
+  logoUrl: string;
+  website: string;
+  isActive: boolean;
+}
+
+interface HeroContent {
+  heroTitleLine1: string;
+  heroTitleAccent: string;
+  heroTitleLine3: string;
+  heroSubtitle: string;
+  ctaText: string;
+}
 
 const HomePage: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeService, setActiveService] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  // Dynamic Content State
+  const [heroContent, setHeroContent] = useState<HeroContent>({
+    heroTitleLine1: "Blooming",
+    heroTitleAccent: "Your Brand",
+    heroTitleLine3: "Into Greatness",
+    heroSubtitle: "Bringing synergy of aesthetics and expertise to help your brand bloom\nwe nurture your vision into a thriving brand that stands out and flourishes.",
+    ctaText: "Start Your Journey"
+  });
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [brands, setBrands] = useState<Brand[]>([]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -32,6 +72,40 @@ const HomePage: React.FC = () => {
     document.body.removeChild(script);
   };
 }, []);
+  // Fetch Data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // 1. Fetch Homepage Content
+        const contentSnap = await getDoc(doc(db, "content", "homepage"));
+        if (contentSnap.exists()) {
+          setHeroContent(contentSnap.data() as HeroContent);
+        }
+
+        // 2. Fetch Active Testimonials
+        const testimonialsSnap = await getDocs(collection(db, "testimonials"));
+        const fetchedTestimonials = testimonialsSnap.docs
+          .map(doc => ({ id: doc.id, ...doc.data() } as Testimonial))
+          .filter(t => t.isActive);
+        if (fetchedTestimonials.length > 0) {
+          setTestimonials(fetchedTestimonials);
+        }
+
+        // 3. Fetch Active Brands
+        const brandsSnap = await getDocs(collection(db, "brands"));
+        const fetchedBrands = brandsSnap.docs
+          .map(doc => ({ id: doc.id, ...doc.data() } as Brand))
+          .filter(b => b.isActive);
+        setBrands(fetchedBrands);
+
+      } catch (error) {
+        console.error("Error fetching homepage data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const services = [
     { icon: '🎯', title: 'Brand Strategy', desc: 'Strategic foundations that resonate' },
@@ -44,73 +118,41 @@ const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
 
   const portfolio = [
-  {
-    id: 1,
-    title: 'Fashion Brand Revival',
-    category: 'Branding',
-    image: '/portfolio/fashion.jpeg'
-  },
-  {
-    id: 2,
-    title: 'Jewellery Launch',
-    category: 'Strategy',
-    image: '/portfolio/jewellery.jpeg'
-  },
-  {
-    id: 3,
-    title: 'Lifestyle Identity',
-    category: 'Design',
-    image: '/portfolio/lifstyle.jpeg'
-  },
-  {
-    id: 4,
-    title: 'Thyme and whisk',
-    category: 'Digital',
-    image: '/portfolio/restaurant.jpeg'
-  }
-];
-
+    {
+      id: 1,
+      title: 'Fashion Brand Revival',
+      category: 'Branding',
+      image: '/portfolio/fashion.jpeg'
+    },
+    {
+      id: 2,
+      title: 'Jewellery Launch',
+      category: 'Strategy',
+      image: '/portfolio/jewellery.jpeg'
+    },
+    {
+      id: 3,
+      title: 'Lifestyle Identity',
+      category: 'Design',
+      image: '/portfolio/lifstyle.jpeg'
+    },
+    {
+      id: 4,
+      title: 'Thyme and whisk',
+      category: 'Digital',
+      image: '/portfolio/restaurant.jpeg'
+    }
+  ];
 
   const stats = [
     { number: '4+', label: 'Years of Experience' },
     { number: '75+', label: 'Happy Clients' },
     { number: '100+', label: 'Projects Completed' },
-    
   ];
 
-  type Testimonial = {
-  text: string;
-  author: string;
-  company: string;
-  rating: number;
-};
-
-const testimonials: Testimonial[] = [
-  {
-    text: 'Great work done by these people! One stop for all the assistance needed for digital marketing related work. The employees and all the staff here provide all the guidance to the best of your satisfaction.',
-    author: 'Purva Shah',
-    company: 'Lifestyle Brand',
-    rating: 5
-  },
-  {
-    text: 'I’ve been working with Bloom for past 4-5 months and my experience with them has been great! Both the founders are very creative and also the team is flexible managing shoot timings and dates and accommodating special requests needed be! I’d recommend you take that meeting :)',
-    author: 'Nishant Shah',
-    company: 'Startup Founder',
-    rating: 4
-  },
-  {
-    text: 'The bloom branding team is really hardworking and efficient. I am associated with bloom since more than a year now and they have taken my brand’s page from 20k followers to 50k + followers. Looking forward to touching 100k followers and many more effective collabs together.',
-    author: 'Mansi Nagdev',
-    company: 'Content Creator',
-    rating: 5
-  }
-];
+  
 
 
-  const clients = [
-    'TechFlow', 'StyleHub', 'Urban Eats', 'GreenLeaf', 'NovaLabs', 'CloudNine', 
-    'PureEssence', 'BrightPath', 'EcoWave', 'Zenith', 'Fusion', 'Stellar'
-  ];
 
   const instaPosts = [
     { id: 1, color: '#003DA5' },
@@ -140,11 +182,13 @@ const testimonials: Testimonial[] = [
           <nav className="nav">
             <a href="#home" className="nav-link">Home</a>
             <a href="/services" className="nav-link">Services</a>
-            <a href="#work" className="nav-link">Our Work</a>
+            <a href="/work" className="nav-link">Our Work</a>
             <a href="/founder+story" className="nav-link">About</a>
             <a href="/contact" className="nav-link">Contact</a>
           </nav>
+          <a href="/contact">
           <button className="header-btn">Brand Enquiry</button>
+          </a>
         </div>
       </header>
       {/* Main Logo Section */}
@@ -153,9 +197,10 @@ const testimonials: Testimonial[] = [
     src="/portfolio/main-logo.png"
     alt="Bloom Branding Main Logo"
     width={1720}
-    height={620}
+    height={720}
     className="main-logo"
     priority
+    padding-top="250px"
   />
 </section>
 
@@ -217,10 +262,14 @@ const testimonials: Testimonial[] = [
         transition: "transform 0.3s ease-out",
       }}
     >
+      <a href="/contact">
       <button className="primary-btn">
         Start Your Journey <span className="btn-arrow">→</span>
       </button>
+      </a>
+      <a href="/work">  
       <button className="secondary-btn">View Our Work</button>
+      </a>
     </div>
   </div>
 
@@ -260,10 +309,12 @@ const testimonials: Testimonial[] = [
         </div>
 
         <div className="services-footer">
+          <a href="/services">
           <button className="view-all-btn">
             Explore All Services
             <span className="btn-arrow">→</span>
           </button>
+          </a>
         </div>
       </section>
 
@@ -271,39 +322,41 @@ const testimonials: Testimonial[] = [
       <section className="portfolio-section" id="work">
         <div className="section-header">
           <span className="section-label">Our Work</span>
-          <h2 className="section-title">Brands We've Helped Bloom</h2>
+          <h2 className="section-title">Brands We&apos;ve Helped Bloom</h2>
         </div>
 
         <div className="portfolio-grid">
-  {portfolio.map((project) => (
-    <div key={project.id} className="portfolio-card">
-      <div className="portfolio-image">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="portfolio-img"
-        />
-        <div className="portfolio-overlay">
-          <span className="portfolio-category">{project.category}</span>
-        </div>
-      </div>
+          {portfolio.map((project) => (
+            <div key={project.id} className="portfolio-card">
+              <div className="portfolio-image">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="portfolio-img"
+                />
+                <div className="portfolio-overlay">
+                  <span className="portfolio-category">{project.category}</span>
+                </div>
+              </div>
 
-      <div className="portfolio-content">
-        <h3 className="portfolio-title">{project.title}</h3>
-        <button className="portfolio-btn"></button>
-      </div>
-    </div>
-  ))}
-</div>
+              <div className="portfolio-content">
+                <h3 className="portfolio-title">{project.title}</h3>
+                <button className="portfolio-btn"></button>
+              </div>
+            </div>
+          ))}
+        </div>
 
 
         <div className="portfolio-footer">
+          <a href="/work">
           <button className="view-all-btn">
             View Full Portfolio
             <span className="btn-arrow">→</span>
           </button>
+          </a>
         </div>
       </section>
 
@@ -329,56 +382,66 @@ const testimonials: Testimonial[] = [
       </section>
 
       {/* Client Reviews */}
-      <section className="reviews-section">
-        <div className="section-header">
-          <span className="section-label">Testimonials</span>
-          <h2 className="section-title">What Our Clients Say</h2>
-        </div>
-
-        <div className="testimonial-container">
-          <button 
-            className="testimonial-nav"
-            onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-          >
-            ←
-          </button>
-
-          <div className="testimonial-card">
-            <div className="stars">
-              {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                <span key={i} className="star">⭐</span>
-              ))}
-            </div>
-            <p className="testimonial-text">"{testimonials[currentTestimonial].text}"</p>
-            <div className="testimonial-author">
-              <div className="author-avatar">
-                {testimonials[currentTestimonial].author.charAt(0)}
-              </div>
-              <div>
-                <div className="author-name">{testimonials[currentTestimonial].author}</div>
-                <div className="author-company">{testimonials[currentTestimonial].company}</div>
-              </div>
-            </div>
+      {testimonials.length > 0 && (
+        <section className="reviews-section">
+          <div className="section-header">
+            <span className="section-label">Testimonials</span>
+            <h2 className="section-title">What Our Clients Say</h2>
           </div>
 
-          <button 
-            className="testimonial-nav"
-            onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
-          >
-            →
-          </button>
-        </div>
+          <div className="testimonial-container">
+            <button
+              className="testimonial-nav"
+              onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+            >
+              ←
+            </button>
 
-        <div className="testimonial-dots">
-          {testimonials.map((_, index) => (
-            <div
-              key={index}
-              className={`dot ${currentTestimonial === index ? 'active' : ''}`}
-              onClick={() => setCurrentTestimonial(index)}
-            ></div>
-          ))}
-        </div>
-      </section>
+            <div className="testimonial-card">
+              <div className="stars">
+                {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
+                  <span key={i} className="star">⭐</span>
+                ))}
+              </div>
+              <p className="testimonial-text">"{testimonials[currentTestimonial].content}"</p>
+              <div className="testimonial-author">
+                <div className="author-avatar">
+                  {testimonials[currentTestimonial].name.charAt(0)}
+                </div>
+                <div>
+                  <div className="author-name">{testimonials[currentTestimonial].name}</div>
+                  <div className="author-company">{testimonials[currentTestimonial].company}</div>
+                </div>
+              </div>
+              {testimonials[currentTestimonial].type === 'video' && testimonials[currentTestimonial].videoUrl && (
+                <div className="mt-4">
+                  <a href={testimonials[currentTestimonial].videoUrl} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">
+                    Watch Video Testimonial
+                  </a>
+                </div>
+              )}
+            </div>
+
+            <button
+              className="testimonial-nav"
+              onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
+            >
+              →
+            </button>
+          </div>
+
+          <div className="testimonial-dots">
+            {testimonials.map((_, index) => (
+              <div
+                key={index}
+                className={`dot ${currentTestimonial === index ? 'active' : ''}`}
+                onClick={() => setCurrentTestimonial(index)}
+              ></div>
+            ))}
+          </div>
+        </section>
+      )}
+
 
       {/* Client Logos */}
       <section className="clients-section">
@@ -387,12 +450,19 @@ const testimonials: Testimonial[] = [
           <h2 className="section-title">Brands That Chose to Bloom With Us</h2>
         </div>
 
-        <div className="clients-grid">
-          {clients.map((client, index) => (
-            <div key={index} className="client-card">
-              <div className="client-logo">{client}</div>
+        <div className="clients-grid flex flex-wrap justify-center gap-8">
+          {brands.length > 0 ? brands.map((brand) => (
+            <div key={brand.id} className="client-card w-40 h-24 relative flex items-center justify-center grayscale hover:grayscale-0 transition duration-300">
+              {brand.logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={brand.logoUrl} alt={brand.name} className="max-w-full max-h-full object-contain" />
+              ) : (
+                <span className="text-white/50 font-bold">{brand.name}</span>
+              )}
             </div>
-          ))}
+          )) : (
+            <p className="text-neutral-500">No brands added yet.</p>
+          )}
         </div>
       </section>
 
@@ -457,12 +527,14 @@ const testimonials: Testimonial[] = [
         <div className="cta-content">
           <h2 className="cta-title">Ready to Make Your Brand Bloom?</h2>
           <p className="cta-text">
-            Let's cultivate something extraordinary together. Your brand's journey to greatness starts here.
+            Let&apos;s cultivate something extraordinary together. Your brand&apos;s journey to greatness starts here.
           </p>
-          <button className="cta-button">
-            <span>Start Brand Enquiry</span>
-            <span className="btn-arrow">→</span>
-          </button>
+          <a href="/contact">
+            <button className="cta-button">
+              <span>Start Brand Enquiry</span>
+              <span className="btn-arrow">→</span>
+            </button>
+          </a>
         </div>
       </section>
 
@@ -517,7 +589,7 @@ const testimonials: Testimonial[] = [
               </p>
               <p className="footer-text">
                 <strong>Location:</strong><br />
-                123 Creative Street, Design City
+                Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007
               </p>
             </div>
           </div>

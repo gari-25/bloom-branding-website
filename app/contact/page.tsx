@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import styles from "./ContactPage.module.css";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ const ContactPage: React.FC = () => {
     budget: "",
     startDate: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -19,57 +22,70 @@ const ContactPage: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Replace with API call or server action
-    console.log("Form submitted:", formData);
-    alert("Thank you! We will get back to you soon.");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      projectDetails: "",
-      budget: "",
-      startDate: "",
-    });
+    setIsSubmitting(true);
+
+    try {
+      await addDoc(collection(db, "enquiries"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+        status: 'new'
+      });
+
+      alert("Thank you! We will get back to you soon.");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        projectDetails: "",
+        budget: "",
+        startDate: "",
+      });
+    } catch (error) {
+      console.error("Error submitting enquiry:", error);
+      alert("Something went wrong. Please try again or contact us directly via email.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className={styles.contactPage}>
       <header className={styles.header}>
-  <div className={styles.headerContent}>
-    <div className={styles.logo}>
-      <span className={styles.logoIcon}>🌸</span>
-      Bloom Branding
-    </div>
+        <div className={styles.headerContent}>
+          <div className={styles.logo}>
+            <span className={styles.logoIcon}>🌸</span>
+            Bloom Branding
+          </div>
 
-    <nav className={styles.nav}>
-      <a href="/ " className={styles.navLink}>Home</a>
-      <a href="/services" className={styles.navLink}>Services</a>
-      <a href="/work" className={styles.navLink}>Our Work</a>
-      <a href="/founder+story" className={styles.navLink}>About</a>
-      <a href="/contact" className={styles.navLinkActive}>Contact</a>
-    </nav>
+          <nav className={styles.nav}>
+            <a href="/ " className={styles.navLink}>Home</a>
+            <a href="/services" className={styles.navLink}>Services</a>
+            <a href="/work" className={styles.navLink}>Our Work</a>
+            <a href="/founder+story" className={styles.navLink}>About</a>
+            <a href="/contact" className={styles.navLinkActive}>Contact</a>
+          </nav>
 
-    <button className={styles.headerBtn}>Brand Enquiry</button>
-  </div>
-</header>
+          <button className={styles.headerBtn}>Brand Enquiry</button>
+        </div>
+      </header>
 
       {/* Hero Section */}
-<section className={styles.heroBlue}>
-  <div className={styles.heroInner}>
-    <h1 className={styles.heroTitle}>Let’s Collaborate</h1>
+      <section className={styles.heroBlue}>
+        <div className={styles.heroInner}>
+          <h1 className={styles.heroTitle}>Let’s Collaborate</h1>
 
-    <p className={styles.heroSubtitle}>
-      Whether you're starting fresh or reimagining your brand, we’re here to
-      help you bring it to life — strategically and beautifully.
-    </p>
+          <p className={styles.heroSubtitle}>
+            Whether you're starting fresh or reimagining your brand, we’re here to
+            help you bring it to life — strategically and beautifully.
+          </p>
 
-    <p className={styles.heroNote}>
-      Share a few details about your project and we’ll take it from there.
-    </p>
-  </div>
-</section>
+          <p className={styles.heroNote}>
+            Share a few details about your project and we’ll take it from there.
+          </p>
+        </div>
+      </section>
 
 
 
@@ -146,8 +162,8 @@ const ContactPage: React.FC = () => {
               />
             </label>
 
-            <button type="submit" className={styles.contactCta}>
-              Submit & Collaborate
+            <button type="submit" className={styles.contactCta} disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit & Collaborate"}
             </button>
           </form>
         </div>
@@ -182,63 +198,63 @@ const ContactPage: React.FC = () => {
           Google Maps Embed Here
         </div>
       </div>
-            {/* Footer */}
-<footer className="footer">
-  <div className="footer-content">
-    <div className="footer-grid">
-      <div className="footer-col">
-        <h3 className="footer-logo">
-          <span className="logo-icon">🌸</span>
-          Bloom Branding
-        </h3>
-        <p className="footer-text">
-          Cultivating brands that flourish. We help businesses grow from seed to full bloom.
-        </p>
-        <div className="social-icons">
-          <a href="#" className="social-icon">📘</a>
-          <a href="#" className="social-icon">📷</a>
-          <a href="#" className="social-icon">🐦</a>
-          <a href="#" className="social-icon">💼</a>
-        </div>
-      </div>
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-grid">
+            <div className="footer-col">
+              <h3 className="footer-logo">
+                <span className="logo-icon">🌸</span>
+                Bloom Branding
+              </h3>
+              <p className="footer-text">
+                Cultivating brands that flourish. We help businesses grow from seed to full bloom.
+              </p>
+              <div className="social-icons">
+                <a href="#" className="social-icon">📘</a>
+                <a href="#" className="social-icon">📷</a>
+                <a href="#" className="social-icon">🐦</a>
+                <a href="#" className="social-icon">💼</a>
+              </div>
+            </div>
 
-      <div className="footer-col">
-        <h4 className="footer-title">Services</h4>
-        <a href="#" className="footer-link">Brand Strategy</a>
-        <a href="#" className="footer-link">Content Creation</a>
-        <a href="#" className="footer-link">Production</a>
-        <a href="#" className="footer-link">Social Media</a>
-        <a href="#" className="footer-link">Digital Experiences</a>
-      </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Services</h4>
+              <a href="#" className="footer-link">Brand Strategy</a>
+              <a href="#" className="footer-link">Content Creation</a>
+              <a href="#" className="footer-link">Production</a>
+              <a href="#" className="footer-link">Social Media</a>
+              <a href="#" className="footer-link">Digital Experiences</a>
+            </div>
 
-      <div className="footer-col">
-        <h4 className="footer-title">Company</h4>
-        <a href="#" className="footer-link">About Us</a>
-        <a href="#" className="footer-link">Our Work</a>
-        <a href="#" className="footer-link">Our Story</a>
-        <a href="#" className="footer-link">Careers</a>
-        <a href="#" className="footer-link">Contact</a>
-      </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Company</h4>
+              <a href="#" className="footer-link">About Us</a>
+              <a href="#" className="footer-link">Our Work</a>
+              <a href="#" className="footer-link">Our Story</a>
+              <a href="#" className="footer-link">Careers</a>
+              <a href="#" className="footer-link">Contact</a>
+            </div>
 
-      <div className="footer-col">
-        <h4 className="footer-title">Get in Touch</h4>
-        <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
-        <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
-        <p className="footer-text"><strong>Location:</strong><br />123 Creative Street, Design City</p>
-      </div>
-    </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Get in Touch</h4>
+              <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
+              <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
+              <p className="footer-text"><strong>Location:</strong><br />123 Creative Street, Design City</p>
+            </div>
+          </div>
 
-    <div className="footer-bottom">
-      <p className="copyright">© 2026 Bloom Branding. All rights reserved.</p>
-      <div className="footer-links">
-        <a href="#" className="footer-bottom-link">Privacy Policy</a>
-        <span className="footer-divider">|</span>
-        <a href="#" className="footer-bottom-link">Terms of Service</a>
-        <span className="footer-divider">|</span>
-        <a href="#" className="footer-bottom-link">Cookie Policy</a>
-      </div>
-    </div>
-    <style>{`
+          <div className="footer-bottom">
+            <p className="copyright">© 2026 Bloom Branding. All rights reserved.</p>
+            <div className="footer-links">
+              <a href="#" className="footer-bottom-link">Privacy Policy</a>
+              <span className="footer-divider">|</span>
+              <a href="#" className="footer-bottom-link">Terms of Service</a>
+              <span className="footer-divider">|</span>
+              <a href="#" className="footer-bottom-link">Cookie Policy</a>
+            </div>
+          </div>
+          <style>{`
 .footer {
   background: #624A41;
   color: #E8E4D9;
@@ -328,8 +344,8 @@ const ContactPage: React.FC = () => {
 }
 `}</style>
 
-  </div>
-</footer>
+        </div>
+      </footer>
     </div>
   );
 };
