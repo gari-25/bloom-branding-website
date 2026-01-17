@@ -860,6 +860,7 @@ const Testimonials = () => {
             font-size: 60px;
             left: 20px;
           }
+            
         }
       `}</style>
 {/* Header */}

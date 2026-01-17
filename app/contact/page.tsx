@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./ContactPage.module.css";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-
+import Image from "next/image";
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -54,9 +54,14 @@ const ContactPage: React.FC = () => {
     <div className={styles.contactPage}>
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <div className={styles.logo}>
-            <span className={styles.logoIcon}>🌸</span>
-            Bloom Branding
+                  <div className="logo">
+            <Image
+              src="/portfolio/logo.png"
+              alt="Bloom Branding Logo"
+              width={80}
+              height={60}
+              priority
+            />
           </div>
 
           <nav className={styles.nav}>
@@ -67,7 +72,7 @@ const ContactPage: React.FC = () => {
             <a href="/contact" className={styles.navLinkActive}>Contact</a>
           </nav>
 
-          <button className={styles.headerBtn}>Brand Enquiry</button>
+          
         </div>
       </header>
 
@@ -180,9 +185,9 @@ const ContactPage: React.FC = () => {
 
           {/* Contact Info */}
           <div className={styles.contactInfo}>
-            <p>Email: contact@bloombranding.com</p>
+            <p>Email: bloombranding2000@gmail.com</p>
             <p>Phone: +91 98765 43210</p>
-            <p>Location: Mumbai, India</p>
+            <p>Location: Surat, India</p>
             <div className={styles.socialLinks}>
               <a href="#">LinkedIn</a> | <a href="#">Instagram</a> |{" "}
               <a href="#">Facebook</a>
@@ -193,11 +198,21 @@ const ContactPage: React.FC = () => {
 
       {/* Optional Map / Placeholder */}
       <div className={styles.mapContainer}>
-        <h2>Our Location</h2>
-        <div className={styles.mapPlaceholder}>
-          Google Maps Embed Here
-        </div>
-      </div>
+  <h2>Our Location</h2>
+
+  <div className={styles.mapWrapper}>
+    <iframe
+      src="https://www.google.com/maps?q=Solarium%20Business%20Centre%20Surat&output=embed"
+      width="100%"
+      height="450"
+      style={{ border: 0 }}
+      allowFullScreen
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</div>
+
       {/* Footer */}
       <footer className="footer">
         <div className="footer-content">

@@ -180,7 +180,7 @@ const clamp = (value: number, min: number, max: number) =>
 </div>
 
           <nav className="nav">
-            <a href="#home" className="nav-link">Home</a>
+            <a href="/ " className="nav-link">Home</a>
             <a href="/services" className="nav-link">Services</a>
             <a href="/work" className="nav-link">Our Work</a>
             <a href="/founder+story" className="nav-link">About</a>
