@@ -20,6 +20,7 @@ const ServicesPage: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -48,6 +49,13 @@ const ServicesPage: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
     };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const services: Service[] = [
@@ -146,6 +154,8 @@ const ServicesPage: React.FC = () => {
     fontWeight: 500,
     transition: 'all 0.3s ease',
   });
+
+  
 
   return (
     <div style={{ 
@@ -499,7 +509,7 @@ const ServicesPage: React.FC = () => {
             width: '100%',
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: window.innerWidth > 768 ? '1fr 1fr' : '1fr',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
             gap: '4rem',
             alignItems: 'center'
           }}>
