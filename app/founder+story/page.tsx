@@ -193,7 +193,7 @@ const navLinkStyle = (scrollY: number) => ({
               In 2020, amidst a world in transformation, Bloom Branding was born from a simple yet powerful belief: every brand deserves to flourish. What started as a small studio with big dreams has grown into a creative powerhouse, helping businesses of all sizes find their unique voice and visual identity.
             </p>
             <p className={styles.paragraph}>
-              Like a garden tended with care, we've cultivated our craft, learning, evolving, and blooming alongside our clients. Each project is a new seed planted, each success story a flower that adds to our ever-growing garden.
+              Like a garden tended with care, we&aposve cultivated our craft, learning, evolving, and blooming alongside our clients. Each project is a new seed planted, each success story a flower that adds to our ever-growing garden.
             </p>
           </div>
         </div>
@@ -214,7 +214,7 @@ const navLinkStyle = (scrollY: number) => ({
           <span className={styles.sectionLabel}>Our Philosophy</span>
           <h2 className={styles.sectionTitleLight}>Blooming the Brand</h2>
           <p className={styles.philosophyText}>
-            We don't just design brands—we nurture them. Like a gardener who understands that each plant needs unique care, we recognize that every brand has its own rhythm, its own story, its own time to bloom.
+            We don&apost just design brands—we nurture them. Like a gardener who understands that each plant needs unique care, we recognize that every brand has its own rhythm, its own story, its own time to bloom.
           </p>
           <div className={styles.philosophyGrid}>
             <div className={styles.philosophyCard}>
@@ -418,7 +418,7 @@ const navLinkStyle = (scrollY: number) => ({
               <h4 className="footer-title">Get in Touch</h4>
               <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
               <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
-              <p className="footer-text"><strong>Location:</strong><br />123 Creative Street, Design City</p>
+              <p className="footer-text"><strong>Location:</strong><br />Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007</p>
             </div>
           </div>
 

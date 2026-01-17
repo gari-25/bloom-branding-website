@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-
+import Image from 'next/image';
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -9,37 +9,37 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Sarah Johnson",
+      name: "Mansi Nagdev",
       role: "CEO, TechStart Inc.",
-      image: "https://i.pravatar.cc/150?img=1",
-      text: "This agency transformed our social media presence completely. Our engagement increased by 300% in just 3 months!",
+      
+      text: "The bloom branding team is really hardworking and efficient. I am associated with bloom since more than a year now and they have taken my brand’s page from 20k followers to 50k + followers. Looking forward to touching 100k followers and many more effective collabs together. So wish they were in my city though to really make organic content for me as I suck at it myself.",
       rating: 5,
       type: "text"
     },
     {
       id: 2,
-      name: "Michael Chen",
+      name: "Purva Shah",
       role: "Marketing Director, GrowthCo",
-      image: "https://i.pravatar.cc/150?img=13",
-      text: "Professional, creative, and results-driven. They understand branding like no other agency we've worked with.",
+      
+      text: "Great work done by these people! One stop for all the assistance needed for digital marketing related work. The employees and all the staff here provide all the guidance to the best of your satisfaction.",
       rating: 5,
       type: "text"
     },
     {
       id: 3,
-      name: "Emma Williams",
+      name: "Nishant Shah",
       role: "Founder, StyleHub",
-      image: "https://i.pravatar.cc/150?img=5",
-      text: "The team's creativity and strategic approach to our social media campaigns exceeded all expectations. Highly recommend!",
-      rating: 5,
+      
+      text: "I’ve been working with Bloom for past 4-5 months and my experience with them has been great! Both the founders are very creative and also the team is flexible managing shoot timings and dates and accommodating special requests needed be! I’d recommend you take that meeting :)",
+      rating: 4,
       type: "text"
     },
     {
       id: 4,
-      name: "David Martinez",
+      name: "Shwet Tejani",
       role: "CMO, BrandVision",
-      image: "https://i.pravatar.cc/150?img=12",
-      text: "From strategy to execution, everything was flawless. Our brand voice is now consistent and engaging across all platforms.",
+      
+      text: "It was such a nice experience working with Bloom Branding. The way they measure every single detail is amazing, and apart from that, it really helped my business. Keep it up, Bloom Branding and team, and thank you.",
       rating: 5,
       type: "text"
     }
@@ -113,6 +113,224 @@ const Testimonials = () => {
           filter: blur(100px);
           animation: float 20s ease-in-out infinite;
         }
+/* Footer */
+.footer {
+  background-color: #3D2925;
+  color: #FBF7F4;
+  padding: 80px 40px 40px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.footer-logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #BDAF62;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #FBF7F4;
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  font-size: 14px;
+  color: rgba(251, 247, 244, 0.7);
+  line-height: 1.6;
+}
+
+.footer-link {
+  font-size: 14px;
+  color: rgba(251, 247, 244, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.footer-link:hover {
+  color: #BDAF62;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icon {
+  font-size: 24px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(251, 247, 244, 0.1);
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright {
+  font-size: 14px;
+  color: rgba(251, 247, 244, 0.5);
+}
+
+.footer-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.footer-bottom-link {
+  font-size: 14px;
+  color: rgba(251, 247, 244, 0.5);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom-link:hover {
+  color: #BDAF62;
+}
+
+.footer-divider {
+  color: rgba(251, 247, 244, 0.3);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fffaf6;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  object-fit: contain;
+}
+
+.main-logo-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px 40px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 236, 220, 0.6),
+    transparent 70%
+  );
+}
+
+.main-logo {
+  max-width: 320px;
+  height: auto;
+  animation: fadeScale 0.8s ease forwards;
+}
+  .nav {
+  display: flex;
+  gap: 32px; /* THIS FIXES “CONNECTED” LINKS */
+  align-items: center;
+}
+
+  .nav-link {
+  position: relative;
+  font-size: 15px;
+  font-weight: 500;
+  color: #49382D;
+  text-decoration: none;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(135deg, #0047AB, #49382D);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0047AB;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* CTA Button */
+.header-btn {
+  background: linear-gradient(135deg, #0047AB, #49382D);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 71, 171, 0.25);
+}
+
+.header-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(0, 71, 171, 0.4);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+
+  .header-content {
+    padding: 14px 20px;
+  }
+}
 
         .testimonials-section::after {
           content: '';
@@ -515,6 +733,73 @@ const Testimonials = () => {
           font-weight: 500;
           opacity: 0.8;
         }
+/* Brands Section */
+.brands-section {
+  background: #fffaf6;
+  padding: 100px 20px;
+}
+
+.brands-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.brands-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #49382D;
+  margin-bottom: 12px;
+}
+
+.brands-subtitle {
+  font-size: 18px;
+  color: rgba(73, 56, 45, 0.7);
+  margin-bottom: 60px;
+}
+
+/* Logo Grid */
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 40px;
+  align-items: center;
+}
+
+.brand-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+  transition: all 0.35s ease;
+}
+
+.brand-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+}
+
+.brand-card img {
+  max-width: 180px;     /* BIGGER */
+  max-height: 100px;    /* BIGGER */
+  object-fit: contain;
+  filter: none;         /* FULL COLOR */
+  opacity: 1;           /* FULL VISIBILITY */
+  transition: transform 0.3s ease;
+}
+
+
+
+
+/* Mobile */
+@media (max-width: 768px) {
+  .brands-title {
+    font-size: 32px;
+  }
+}
 
         /* Responsive Design */
         @media (max-width: 1024px) {
@@ -577,10 +862,37 @@ const Testimonials = () => {
           }
         }
       `}</style>
-
+{/* Header */}
+                  <header className="header">
+                    <div className="header-content">
+                      <div className="logo">
+              <Image
+                src="/portfolio/logo.png"
+                alt="Bloom Branding Logo"
+                width={80}
+                height={60}
+                priority
+              />
+              
+            </div>
+            
+                      <nav className="nav">
+                        <a href="/ " className="nav-link">Home</a>
+                        <a href="/services" className="nav-link">Services</a>
+                        <a href="/work" className="nav-link">Our Work</a>
+                        <a href="/founder+story" className="nav-link">About</a>
+                        <a href="/contact" className="nav-link">Contact</a>
+                      </nav>
+                      <a href="/contact">
+                      <button className="header-btn">Brand Enquiry</button>
+                      </a>
+                    </div>
+                  </header>
       <section className="testimonials-section">
+        
         <div className="testimonials-container">
           <div className="section-header">
+              
             <span className="section-label">Success Stories</span>
             <h2 className="section-title">What Our Clients Say</h2>
             <p className="section-subtitle">
@@ -610,11 +922,7 @@ const Testimonials = () => {
                       {renderStars(testimonial.rating)}
                     </div>
                     <div className="testimonial-author">
-                      <img 
-                        src={testimonial.image} 
-                        alt={testimonial.name}
-                        className="author-image"
-                      />
+                     
                       <div className="author-info">
                         <h4 className="author-name">{testimonial.name}</h4>
                         <p className="author-role">{testimonial.role}</p>
@@ -643,20 +951,123 @@ const Testimonials = () => {
 
           <div className="stats-row">
             <div className="stat-item">
-              <h3 className="stat-number">500+</h3>
+              <h3 className="stat-number">75+</h3>
               <p className="stat-label">Happy Clients</p>
             </div>
             <div className="stat-item">
-              <h3 className="stat-number">300%</h3>
-              <p className="stat-label">Avg. Growth</p>
+              <h3 className="stat-number">100+</h3>
+              <p className="stat-label">Brands Bloomed</p>
             </div>
             <div className="stat-item">
-              <h3 className="stat-number">50M+</h3>
-              <p className="stat-label">Reach Generated</p>
+              <h3 className="stat-number">4+</h3>
+              <p className="stat-label">Years of Experience</p>
             </div>
           </div>
         </div>
+     
       </section>
+      {/* Brands Section */}
+<section className="brands-section">
+  <div className="brands-container">
+    <h2 className="brands-title">Brands That Trust Us</h2>
+    <p className="brands-subtitle">
+      Proud to collaborate with brands across industries
+    </p>
+
+    <div className="brands-grid">
+      {[
+        "/portfolio/ambc.png",
+        "/portfolio/binal.png",
+        "/portfolio/cafewhiteeye.png",
+        "/portfolio/dhruv.png",
+        "/portfolio/lifebeach.png",
+        "/portfolio/izarah.png",
+        "/portfolio/tiffinbox.png",
+        "/portfolio/petra.png",
+        "/portfolio/mansi.png",
+        "/portfolio/manisha.png",
+        "/portfolio/subhrekha.png",
+      ].map((logo, index) => (
+        <div className="brand-card" key={index}>
+          <Image
+            src={logo}
+            alt="Brand Logo"
+            width={140}
+            height={80}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+            {/* Footer */}
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-grid">
+            <div className="footer-col">
+              <h3 className="footer-logo">
+                <span className="logo-icon">🌸</span>
+                Bloom Branding
+              </h3>
+              <p className="footer-text">
+                Cultivating brands that flourish. We help businesses grow from seed to full bloom.
+              </p>
+              <div className="social-icons">
+                <a href="#" className="social-icon">📘</a>
+                <a href="#" className="social-icon">📷</a>
+                <a href="#" className="social-icon">🐦</a>
+                <a href="#" className="social-icon">💼</a>
+              </div>
+            </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Services</h4>
+              <a href="#" className="footer-link">Brand Strategy</a>
+              <a href="#" className="footer-link">Content Creation</a>
+              <a href="#" className="footer-link">Production</a>
+              <a href="#" className="footer-link">Social Media</a>
+              <a href="#" className="footer-link">Digital Experiences</a>
+            </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Company</h4>
+              <a href="/founder+story" className="footer-link">About Us</a>
+              <a href="/work" className="footer-link">Our Work</a>
+              <a href="/founder+story" className="footer-link">Our Story</a>
+              <a href="/services" className="footer-link">Services</a>
+              <a href="/contact" className="footer-link">Contact</a>
+            </div>
+            <div className="footer-col">
+              <h4 className="footer-title">Get in Touch</h4>
+              <p className="footer-text">
+                <strong>Email:</strong><br />
+               <a href="mailto:hello.bloombranding@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">
+  Email Us
+</a>
+
+                
+              </p>
+              <p className="footer-text">
+                <strong>Phone:</strong><br />
+                97270 68674 | 99095 11226
+              </p>
+              <p className="footer-text">
+                <strong>Location:</strong><br />
+                Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007
+              </p>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p className="copyright">© 2026 Bloom Branding. All rights reserved.</p>
+            <div className="footer-links">
+              <a href="#" className="footer-bottom-link">Privacy Policy</a>
+              <span className="footer-divider">|</span>
+              <a href="#" className="footer-bottom-link">Terms of Service</a>
+              <span className="footer-divider">|</span>
+              <a href="#" className="footer-bottom-link">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 };

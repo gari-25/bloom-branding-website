@@ -240,7 +240,7 @@ const ContactPage: React.FC = () => {
               <h4 className="footer-title">Get in Touch</h4>
               <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
               <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
-              <p className="footer-text"><strong>Location:</strong><br />123 Creative Street, Design City</p>
+              <p className="footer-text"><strong>Location:</strong><br />Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007</p>
             </div>
           </div>
 

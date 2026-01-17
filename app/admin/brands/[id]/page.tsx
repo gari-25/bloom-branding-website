@@ -6,6 +6,7 @@ import { db, storage } from "@/lib/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
+import "../../../../styles/admin.css";
 
 export default function EditBrandPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter();
@@ -20,6 +21,7 @@ export default function EditBrandPage({ params }: { params: Promise<{ id: string
     const [currentLogoUrl, setCurrentLogoUrl] = useState("");
     const [logoFile, setLogoFile] = useState<File | null>(null);
 
+    // Unwrap params using React.use()
     const { id } = use(params);
 
     useEffect(() => {
@@ -81,381 +83,99 @@ export default function EditBrandPage({ params }: { params: Promise<{ id: string
         }
     };
 
-    if (loading) return <div className="loading-state">Loading...</div>;
+    if (loading) return <div className="text-center py-20 text-[#624A41]">Loading...</div>;
 
     return (
-        <>
-            <style jsx>{`
-                .loading-state {
-                    text-align: center;
-                    padding: 5rem 0;
-                    color: #624A41;
-                    font-size: 1.125rem;
-                }
+        <div className="max-w-2xl mx-auto animate-in align-top fade-in duration-500">
+            <header className="mb-10">
+                <Link href="/admin/brands" className="text-[#003DA5] hover:text-[#892F1A] font-medium mb-4 inline-flex items-center gap-2 transition-colors">
+                    ← Back to Brands
+                </Link>
+                <div className="flex items-center gap-4">
+                    {currentLogoUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={currentLogoUrl} alt={formData.name} className="w-16 h-16 object-contain bg-white rounded-lg p-2 shadow-sm border border-[#3D2925]/5" />
+                    )}
+                    <div>
+                        <h1 className="text-4xl font-extrabold text-[#3D2925]">Edit Brand</h1>
+                        <p className="text-[#624A41] mt-1 text-lg">Update profile for {formData.name}</p>
+                    </div>
+                </div>
+            </header>
 
-                .edit-brand-container {
-                    max-width: 672px;
-                    margin: 0 auto;
-                    animation: fadeIn 0.5s ease-in;
-                }
+            <form onSubmit={handleUpdate} className="space-y-8 bg-white p-10 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-[#3D2925]/5">
+                <div>
+                    <label className="block text-xs font-bold text-[#3D2925]/70 uppercase tracking-wider mb-2 ml-1">Brand Name</label>
+                    <input
+                        type="text"
+                        required
+                        className="w-full bg-[#FBF7F4] rounded-xl border-transparent focus:border-[#003DA5] focus:bg-white focus:ring-0 px-4 py-3 text-[#3D2925] font-bold text-lg transition-all"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    />
+                </div>
 
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                        transform: translateY(10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
+                <div>
+                    <label className="block text-xs font-bold text-[#3D2925]/70 uppercase tracking-wider mb-2 ml-1">Website URL</label>
+                    <input
+                        type="url"
+                        className="w-full bg-[#FBF7F4] rounded-xl border-transparent focus:border-[#003DA5] focus:bg-white focus:ring-0 px-4 py-3 text-[#003DA5] font-medium transition-all"
+                        value={formData.website}
+                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                    />
+                </div>
 
-                .page-header {
-                    margin-bottom: 2.5rem;
-                }
-
-                .back-link {
-                    color: #003DA5;
-                    font-weight: 500;
-                    margin-bottom: 1rem;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                    transition: color 0.3s ease;
-                }
-
-                .back-link:hover {
-                    color: #892F1A;
-                }
-
-                .header-content {
-                    display: flex;
-                    align-items: center;
-                    gap: 1rem;
-                }
-
-                .current-logo {
-                    width: 64px;
-                    height: 64px;
-                    object-fit: contain;
-                    background: white;
-                    border-radius: 0.5rem;
-                    padding: 0.5rem;
-                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-                    border: 1px solid rgba(61, 41, 37, 0.05);
-                    flex-shrink: 0;
-                }
-
-                .header-text h1 {
-                    font-size: 2.25rem;
-                    font-weight: 800;
-                    color: #3D2925;
-                    margin: 0;
-                }
-
-                .header-text p {
-                    color: #624A41;
-                    margin-top: 0.25rem;
-                    font-size: 1.125rem;
-                }
-
-                .form-container {
-                    background: white;
-                    padding: 2.5rem;
-                    border-radius: 1.5rem;
-                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
-                    border: 1px solid rgba(61, 41, 37, 0.05);
-                }
-
-                .form-group {
-                    margin-bottom: 2rem;
-                }
-
-                .form-label {
-                    display: block;
-                    font-size: 0.75rem;
-                    font-weight: 700;
-                    color: rgba(61, 41, 37, 0.7);
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                    margin-bottom: 0.5rem;
-                    margin-left: 0.25rem;
-                }
-
-                .form-input {
-                    width: 100%;
-                    background: #FBF7F4;
-                    border-radius: 0.75rem;
-                    border: 2px solid transparent;
-                    padding: 0.75rem 1rem;
-                    color: #3D2925;
-                    font-weight: 500;
-                    transition: all 0.3s ease;
-                    font-size: 1rem;
-                }
-
-                .form-input:focus {
-                    background: white;
-                    border-color: #003DA5;
-                    outline: none;
-                }
-
-                .brand-name-input {
-                    font-weight: 700;
-                    font-size: 1.125rem;
-                }
-
-                .website-input {
-                    color: #003DA5;
-                }
-
-                .form-textarea {
-                    width: 100%;
-                    background: #FBF7F4;
-                    border-radius: 0.75rem;
-                    border: 2px solid transparent;
-                    padding: 0.75rem 1rem;
-                    color: #3D2925;
-                    transition: all 0.3s ease;
-                    resize: none;
-                    font-size: 1rem;
-                    line-height: 1.5;
-                }
-
-                .form-textarea:focus {
-                    background: white;
-                    border-color: #003DA5;
-                    outline: none;
-                }
-
-                .logo-upload-box {
-                    background: #FBF7F4;
-                    padding: 1.5rem;
-                    border-radius: 1rem;
-                    border: 1px solid rgba(61, 41, 37, 0.05);
-                    display: flex;
-                    align-items: center;
-                    gap: 1.5rem;
-                }
-
-                .file-input-wrapper {
-                    flex: 1;
-                }
-
-                .file-input {
-                    display: block;
-                    width: 100%;
-                    font-size: 0.875rem;
-                    color: #624A41;
-                    cursor: pointer;
-                }
-
-                .file-input::file-selector-button {
-                    margin-right: 1rem;
-                    padding: 0.625rem 1.5rem;
-                    border-radius: 9999px;
-                    border: none;
-                    font-size: 0.875rem;
-                    font-weight: 700;
-                    background: #3D2925;
-                    color: white;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                }
-
-                .file-input::file-selector-button:hover {
-                    background: #892F1A;
-                }
-
-                .file-hint {
-                    font-size: 0.75rem;
-                    color: rgba(61, 41, 37, 0.4);
-                    margin-top: 0.75rem;
-                    font-weight: 500;
-                }
-
-                .checkbox-group {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.75rem;
-                    background: #FBF7F4;
-                    padding: 1rem;
-                    border-radius: 0.75rem;
-                    margin-bottom: 2rem;
-                }
-
-                .checkbox-input {
-                    width: 1.25rem;
-                    height: 1.25rem;
-                    border-radius: 0.25rem;
-                    color: #003DA5;
-                    border: 2px solid #d1d5db;
-                    cursor: pointer;
-                    flex-shrink: 0;
-                }
-
-                .checkbox-input:focus {
-                    outline: none;
-                    box-shadow: 0 0 0 3px rgba(0, 61, 165, 0.1);
-                }
-
-                .checkbox-label {
-                    font-size: 0.875rem;
-                    font-weight: 700;
-                    color: #3D2925;
-                    cursor: pointer;
-                }
-
-                .submit-button {
-                    width: 100%;
-                    background: #892F1A;
-                    color: white;
-                    font-weight: 700;
-                    padding: 1rem;
-                    border-radius: 9999px;
-                    border: none;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    font-size: 1rem;
-                }
-
-                .submit-button:hover:not(:disabled) {
-                    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
-                    background: #6b2415;
-                    transform: translateY(-2px);
-                }
-
-                .submit-button:disabled {
-                    opacity: 0.5;
-                    cursor: not-allowed;
-                }
-
-                @media (max-width: 768px) {
-                    .edit-brand-container {
-                        padding: 0 1rem;
-                    }
-
-                    .header-text h1 {
-                        font-size: 1.875rem;
-                    }
-
-                    .header-text p {
-                        font-size: 1rem;
-                    }
-
-                    .form-container {
-                        padding: 1.5rem;
-                    }
-
-                    .header-content {
-                        flex-direction: column;
-                        align-items: flex-start;
-                    }
-
-                    .current-logo {
-                        width: 48px;
-                        height: 48px;
-                    }
-                }
-
-                @media (max-width: 640px) {
-                    .header-text h1 {
-                        font-size: 1.5rem;
-                    }
-
-                    .logo-upload-box {
-                        flex-direction: column;
-                        align-items: flex-start;
-                    }
-                }
-            `}</style>
-
-            <div className="edit-brand-container">
-                <header className="page-header">
-                    <Link href="/admin/brands" className="back-link">
-                        ← Back to Brands
-                    </Link>
-                    <div className="header-content">
-                        {currentLogoUrl && (
-                            <img src={currentLogoUrl} alt={formData.name} className="current-logo" />
-                        )}
-                        <div className="header-text">
-                            <h1>Edit Brand</h1>
-                            <p>Update profile for {formData.name}</p>
+                <div>
+                    <label className="block text-xs font-bold text-[#3D2925]/70 uppercase tracking-wider mb-2 ml-1">Logo</label>
+                    <div className="bg-[#FBF7F4] p-6 rounded-2xl border border-[#3D2925]/5 flex items-center gap-6">
+                        <div className="flex-1">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
+                                className="block w-full text-sm text-[#624A41]
+                  file:mr-4 file:py-2.5 file:px-6
+                  file:rounded-full file:border-0
+                  file:text-sm file:font-bold
+                  file:bg-[#3D2925] file:text-white
+                  hover:file:bg-[#892F1A]
+                  cursor-pointer transition-all
+                "
+                            />
+                            <p className="text-xs text-[#3D2925]/40 mt-3 font-medium">Upload new image to replace current logo.</p>
                         </div>
                     </div>
-                </header>
+                </div>
 
-                <form onSubmit={handleUpdate} className="form-container">
-                    <div className="form-group">
-                        <label className="form-label">Brand Name</label>
-                        <input
-                            type="text"
-                            required
-                            className="form-input brand-name-input"
-                            value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        />
-                    </div>
+                <div>
+                    <label className="block text-xs font-bold text-[#3D2925]/70 uppercase tracking-wider mb-2 ml-1">Description</label>
+                    <textarea
+                        rows={4}
+                        className="w-full bg-[#FBF7F4] rounded-xl border-transparent focus:border-[#003DA5] focus:bg-white focus:ring-0 px-4 py-3 text-[#3D2925] transition-all resize-none"
+                        value={formData.description}
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    />
+                </div>
 
-                    <div className="form-group">
-                        <label className="form-label">Website URL</label>
-                        <input
-                            type="url"
-                            className="form-input website-input"
-                            value={formData.website}
-                            onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                        />
-                    </div>
+                <div className="flex items-center gap-3 bg-[#FBF7F4] p-4 rounded-xl">
+                    <input
+                        type="checkbox"
+                        id="isActive"
+                        checked={formData.isActive}
+                        onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                        className="w-5 h-5 rounded text-[#003DA5] focus:ring-[#003DA5] border-gray-300"
+                    />
+                    <label htmlFor="isActive" className="text-sm font-bold text-[#3D2925]">Active (Visible on public site)</label>
+                </div>
 
-                    <div className="form-group">
-                        <label className="form-label">Logo</label>
-                        <div className="logo-upload-box">
-                            <div className="file-input-wrapper">
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
-                                    className="file-input"
-                                />
-                                <p className="file-hint">Upload new image to replace current logo.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="form-group">
-                        <label className="form-label">Description</label>
-                        <textarea
-                            rows={4}
-                            className="form-textarea"
-                            value={formData.description}
-                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        />
-                    </div>
-
-                    <div className="checkbox-group">
-                        <input
-                            type="checkbox"
-                            id="isActive"
-                            checked={formData.isActive}
-                            onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                            className="checkbox-input"
-                        />
-                        <label htmlFor="isActive" className="checkbox-label">
-                            Active (Visible on public site)
-                        </label>
-                    </div>
-
-                    <button
-                        type="submit"
-                        disabled={saving}
-                        className="submit-button"
-                    >
-                        {saving ? "Saving Changes..." : "Save Changes"}
-                    </button>
-                </form>
-            </div>
-        </>
+                <button
+                    type="submit"
+                    disabled={saving}
+                    className="w-full bg-[#892F1A] text-white font-bold py-4 rounded-full shadow-lg hover:shadow-xl hover:bg-[#6b2415] hover:-translate-y-1 transition-all disabled:opacity-50 disabled:hover:translate-y-0"
+                >
+                    {saving ? "Saving Changes..." : "Save Changes"}
+                </button>
+            </form>
+        </div>
     );
 }
