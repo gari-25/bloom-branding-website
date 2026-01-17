@@ -1,14 +1,15 @@
 import Link from "next/link";
+import "../../../styles/admin.css";
 
 export default function DashboardPage() {
     return (
         <>
-            <header className="mb-10">
-                <h1 className="text-4xl font-extrabold text-[#3D2925]">Dashboard</h1>
-                <p className="text-[#624A41] mt-2 text-lg">Welcome back, admin. Here is your overview.</p>
+            <header className="dashboard-header">
+                <h1>Dashboard</h1>
+                <p>Welcome back, admin. Here is your overview.</p>
             </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="dashboard-grid">
                 <DashboardCard
                     href="/admin/brands"
                     icon="🏢"
@@ -51,15 +52,15 @@ function DashboardCard({ href, icon, title, description }: { href: string; icon:
     return (
         <Link
             href={href}
-            className="group bg-white p-8 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-transparent hover:border-[#003DA5]/10 transition-all duration-300 hover:-translate-y-2 flex flex-col items-start"
+            className="dashboard-card"
         >
-            <div className="w-16 h-16 bg-[#FBF7F4] rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-[#003DA5]/5 transition-all duration-300">
+            <div className="dashboard-card-icon">
                 {icon}
             </div>
-            <h3 className="text-2xl font-bold text-[#3D2925] mb-3 group-hover:text-[#003DA5] transition-colors">{title}</h3>
-            <p className="text-[#624A41] leading-relaxed">{description}</p>
+            <h3>{title}</h3>
+            <p>{description}</p>
 
-            <div className="mt-8 text-[#003DA5] font-bold text-sm uppercase tracking-wider opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+            <div className="dashboard-card-link">
                 Manage {title} →
             </div>
         </Link>

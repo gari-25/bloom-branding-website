@@ -6,6 +6,7 @@ import { db, storage } from "@/lib/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
+import "../../../../styles/admin.css";
 
 export default function EditBrandPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter();

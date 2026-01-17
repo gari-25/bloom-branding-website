@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Link from "next/link";
+import "../../../../styles/admin.css";
 
 export default function EditTestimonialPage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter();

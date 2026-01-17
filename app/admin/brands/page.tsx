@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import "../../../styles/admin.css";
 
 interface Brand {
     id: string;
@@ -50,77 +51,69 @@ export default function BrandsListPage() {
     };
 
     return (
-        <div className="animate-in fade-in duration-500">
-            <header className="flex justify-between items-end mb-10">
-                <div>
-                    <h1 className="text-4xl font-extrabold text-[#3D2925]">Brand Profiles</h1>
-                    <p className="text-[#624A41] mt-2 text-lg">Manage your client portfolio and logos.</p>
-                </div>
-                <Link
-                    href="/admin/brands/add"
-                    className="bg-[#003DA5] text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:bg-[#002d7a] hover:-translate-y-1 transition-all flex items-center gap-2"
-                >
-                    <span className="text-xl">+</span> Add Brand
+        <div className="brands-container">
+            <div className="brands-header">
+                <h1>Brand Profiles</h1>
+                <Link href="/admin/brands/add" className="add-brand-btn">
+                    + Add New Brand
                 </Link>
-            </header>
+            </div>
 
             {loading ? (
-                <div className="text-center py-20">
-                    <div className="animate-spin text-4xl mb-4">🌸</div>
-                    <p className="text-[#624A41]">Loading brands...</p>
+                <div className="loading-container">
+                    <div className="loading-spinner"></div>
+                    <p>Loading brands...</p>
                 </div>
             ) : brands.length === 0 ? (
-                <div className="text-center py-20 bg-white rounded-3xl shadow-sm border border-[#3D2925]/5">
-                    <p className="text-[#624A41] mb-6 text-xl">No brands found.</p>
+                <div className="no-enquiries">
+                    <p className="mb-6">No brands found.</p>
                     <Link
                         href="/admin/brands/add"
-                        className="text-[#003DA5] font-bold underline hover:text-[#892F1A] transition-colors"
+                        className="add-brand-btn"
                     >
                         Create your first brand profile
                     </Link>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="brands-grid">
                     {brands.map((brand) => (
-                        <div key={brand.id} className="bg-white rounded-2xl overflow-hidden shadow-[0_5px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_30px_rgba(33,26,16,0.08)] transition-all duration-300 group ring-1 ring-[#3D2925]/5">
-                            <div className="h-48 bg-[#FBF7F4] relative flex items-center justify-center p-8 group-hover:bg-white transition-colors duration-500">
+                        <div key={brand.id} className="brand-card">
+                            <div className="brand-logo-container">
                                 {brand.logoUrl ? (
                                     // eslint-disable-next-line @next/next/no-img-element
                                     <img
                                         src={brand.logoUrl}
                                         alt={brand.name}
-                                        className="w-full h-full object-contain filter group-hover:scale-110 transition-transform duration-500"
+                                        className="brand-logo"
                                     />
                                 ) : (
-                                    <div className="text-[#624A41]/50 font-medium">No Logo</div>
+                                    <div className="no-logo">No Logo</div>
                                 )}
                                 {!brand.isActive && (
-                                    <div className="absolute top-4 right-4 bg-gray-100 text-gray-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                                        Inactive
-                                    </div>
+                                    <div className="brand-status inactive">Inactive</div>
                                 )}
                             </div>
-                            <div className="p-6">
-                                <h3 className="text-xl font-bold text-[#3D2925] mb-2 group-hover:text-[#892F1A] transition-colors">{brand.name}</h3>
+                            <div className="brand-info">
+                                <h3>{brand.name}</h3>
                                 <a
                                     href={brand.website}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-sm text-[#003DA5] font-medium hover:underline truncate block mb-6"
+                                    className="brand-website"
                                 >
                                     {brand.website}
                                 </a>
 
-                                <div className="flex gap-4 opacity-70 group-hover:opacity-100 transition-opacity">
+                                <div className="brand-actions">
                                     <Link
                                         href={`/admin/brands/${brand.id}`}
-                                        className="flex-1 bg-white border-2 border-[#3D2925]/10 text-[#3D2925] text-center py-2.5 rounded-xl font-bold hover:border-[#3D2925] hover:bg-[#3D2925] hover:text-white transition-all"
+                                        className="edit-btn"
                                     >
                                         Edit
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(brand.id)}
-                                        className="px-4 text-red-400 hover:text-red-600 font-medium transition-colors"
+                                        className="delete-btn"
                                         title="Delete Brand"
                                     >
                                         Delete

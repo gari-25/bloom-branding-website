@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { getAuthInstance } from "@/lib/firebase";
 import Link from "next/link";
 import { onAuthStateChanged, User } from "firebase/auth";
+import "../../styles/admin.css";
 
 export default function AdminLayout({
     children,
@@ -15,6 +16,7 @@ export default function AdminLayout({
     const pathname = usePathname();
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<User | null>(null);
+    const [sidebarVisible, setSidebarVisible] = useState(true);
 
     useEffect(() => {
         const auth = getAuthInstance();
@@ -32,8 +34,8 @@ export default function AdminLayout({
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-black text-white">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
             </div>
         );
     }
@@ -46,32 +48,44 @@ export default function AdminLayout({
     // If authenticated and not on login page, show dashboard layout
     if (!user) return null;
 
-    return (
-        <div className="min-h-screen flex bg-neutral-900 text-white font-sans">
-            {/* Sidebar */}
-            <aside className="w-64 border-r border-neutral-800 p-6 flex flex-col">
-                <h2 className="text-xl font-bold mb-8 tracking-tight">Bloom Admin</h2>
+    const toggleSidebar = () => {
+        setSidebarVisible(!sidebarVisible);
+    };
 
-                <nav className="flex-1 space-y-2">
+    return (
+        <div className="admin-layout">
+            {/* Navigation Toggle - Works on all screen sizes */}
+            <button 
+                className="mobile-nav-toggle"
+                onClick={toggleSidebar}
+                aria-label="Toggle navigation menu"
+            >
+                {sidebarVisible ? "☰" : "☰"}
+            </button>
+
+            {/* Sidebar */}
+            <aside className={`admin-sidebar ${sidebarVisible ? 'sidebar-visible' : 'sidebar-hidden'}`}>
+                <h2>Bloom Admin</h2>
+
+                <nav className="admin-nav">
                     <NavLink href="/admin/dashboard" label="Dashboard" active={pathname === "/admin/dashboard"} />
                     <NavLink href="/admin/brands" label="Brand Profiles" active={pathname.startsWith("/admin/brands")} />
                     <NavLink href="/admin/testimonials" label="Testimonials" active={pathname.startsWith("/admin/testimonials")} />
                     <NavLink href="/admin/homepage" label="Homepage Content" active={pathname.startsWith("/admin/homepage")} />
                     <NavLink href="/admin/about" label="About Page Content" active={pathname.startsWith("/admin/about")} />
                     <NavLink href="/admin/enquiries" label="Enquiries" active={pathname.startsWith("/admin/enquiries")} />
-                    {/* Add more links here later */}
                 </nav>
 
                 <button
                     onClick={() => getAuthInstance().signOut()}
-                    className="mt-auto flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
+                    className="sign-out-btn"
                 >
                     <span>Sign Out</span>
                 </button>
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 p-8 overflow-y-auto">
+            <main className={`admin-main ${sidebarVisible ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
                 {children}
             </main>
         </div>
@@ -82,10 +96,7 @@ function NavLink({ href, label, active }: { href: string; label: string; active:
     return (
         <Link
             href={href}
-            className={`block px-4 py-2 rounded-lg transition-colors ${active
-                ? "bg-white text-black font-medium"
-                : "text-neutral-400 hover:bg-neutral-800 hover:text-white"
-                }`}
+            className={`nav-link ${active ? "active" : ""}`}
         >
             {label}
         </Link>
