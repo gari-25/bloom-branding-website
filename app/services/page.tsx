@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from "next/link";
-
+import Image from 'next/image';
+import './service.css'; 
 interface Service {
   id: number;
   title: string;
@@ -198,6 +199,7 @@ const navLinkStyle = (scrollY: number) => ({
 
         </div>
       </header>
+
 
       {/* Hero Section with Enhanced 3D Elements */}
       <section style={{
@@ -646,6 +648,32 @@ const navLinkStyle = (scrollY: number) => ({
           </div>
         </section>
       ))}
+            {/* Process Section */}
+      <section className="process-section">
+        <div className="section-header">
+          <span className="section-label">How We Work</span>
+          <h2 className="process-title">Our Approach</h2>
+        </div>
+        <div className="process-timeline">
+          {[
+            { number: '01', title: 'Discover', text: 'Deep dive into your brand, audience, and goals', color: '#892F1A' },
+            { number: '02', title: 'Design', text: 'Craft strategic solutions tailored to your needs', color: '#BDAF62' },
+            { number: '03', title: 'Deliver', text: 'Execute with precision and measure results', color: '#624A41' },
+            { number: '04', title: 'Grow', text: 'Iterate and optimize for continuous improvement', color: '#892F1A' }
+          ].map((step, index) => (
+            <div key={step.number} className="process-step">
+              <div className="step-connector"></div>
+              <div className="step-circle" style={{ borderColor: step.color }}>
+                <span className="process-number" style={{ color: step.color }}>{step.number}</span>
+              </div>
+              <div className="step-content">
+                <h4 className="process-step-title">{step.title}</h4>
+                <p className="process-step-text">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section style={{
@@ -744,7 +772,7 @@ const navLinkStyle = (scrollY: number) => ({
         <h4 className="footer-title">Get in Touch</h4>
         <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
         <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
-        <p className="footer-text"><strong>Location:</strong><br />123 Creative Street, Design City</p>
+        <p className="footer-text"><strong>Location:</strong><br />Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007</p>
       </div>
     </div>
 

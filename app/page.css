@@ -28,7 +28,23 @@
   0%, 100% { opacity: 0.6; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.05); }
 }
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-18px) translateX(6px);
+  }
+}
 
+@keyframes floatSoftReverse {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-22px) translateX(-6px);
+  }
+}
 /* Header */
 .header {
   position: fixed;
@@ -36,7 +52,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: rgba(251, 247, 244, 0.95);
+  background-color: #f7ecb6;
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(137, 47, 26, 0.1);
 }
@@ -142,7 +158,7 @@
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
+  height: 750px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -268,41 +284,40 @@
 /* Floating Elements */
 .floating-elements {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
+  z-index: 0;
 }
 
 .floating-item {
   position: absolute;
-  font-size: 48px;
-  opacity: 0.6;
+  font-size: 52px;
+  opacity: 0.65;
+  filter: blur(0.2px);
 }
 
+
 .float-1 {
-  top: 20%;
-  left: 10%;
-  animation: float 6s ease-in-out infinite;
+  top: 18%;
+  left: 8%;
+  animation: floatSoft 8s ease-in-out infinite;
 }
 
 .float-2 {
-  top: 30%;
-  right: 15%;
-  animation: float2 7s ease-in-out infinite;
+  top: 26%;
+  right: 12%;
+  animation: floatSoftReverse 9s ease-in-out infinite;
 }
 
 .float-3 {
-  bottom: 25%;
-  left: 20%;
-  animation: float3 8s ease-in-out infinite;
+  bottom: 28%;
+  left: 18%;
+  animation: floatSoft 10s ease-in-out infinite;
 }
-
 .float-4 {
   bottom: 20%;
   right: 10%;
-  animation: float 9s ease-in-out infinite;
+  animation: floatSoftReverse 11s ease-in-out infinite;
 }
 
 /* Section Styles */
@@ -313,7 +328,7 @@
 
 .section-label {
   display: inline-block;
-  font-size: 14px;
+  font-size: 25px;
   font-weight: 700;
   color: #003DA5;
   text-transform: uppercase;
@@ -534,27 +549,38 @@
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px;
-  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 60px;align-items: center;
 }
-
 
 .stat-card {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stat-number {
-  font-size: 64px;
+  font-size: 72px;
   font-weight: 900;
   color: #BDAF62;
-  margin-bottom: 10px;
+  line-height: 1;
+  margin-bottom: 14px;
+margin-left: 230px;
+  /* REAL FIX */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: translateX(-2px); /* optical correction */
 }
+
 
 .stat-label {
   font-size: 16px;
   color: rgba(251, 247, 244, 0.9);
   font-weight: 600;
+  margin-left: 200px;
 }
 
 .stat-bar {
@@ -563,6 +589,7 @@
   background-color: #BDAF62;
   margin: 20px auto 0;
   border-radius: 2px;
+  margin-left: 250px;
 }
 
 /* Reviews Section */
@@ -641,6 +668,11 @@
   font-size: 24px;
   font-weight: 700;
   color: #FFFFFF;
+}
+/* Remove blue underline & default link color */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .author-name {
@@ -725,13 +757,29 @@
   margin-right: 10px;
 }
 
+/* FORCE CENTER INSTAGRAM EMBEDS — FINAL FIX */
 .insta-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center !important;
+  align-items: center;
+  gap: 30px;
 }
+
+/* Instagram blockquote wrapper */
+.insta-grid blockquote.instagram-media {
+  margin: 0 !important;
+  max-width: 320px !important;
+  width: 320px !important;
+  display: flex !important;
+  justify-content: center;
+}
+
+/* Instagram iframe itself */
+.insta-grid iframe {
+  margin: 0 auto !important;
+}
+
 
 .insta-post {
   aspect-ratio: 1;
@@ -801,7 +849,7 @@
 /* CTA Section */
 .cta-section {
   padding: 120px 40px;
-  background: #003DA5;
+  background: #003e95;
   position: relative;
   overflow: hidden;
 }
@@ -1007,30 +1055,205 @@
     flex-direction: column;
     gap: 20px;
   }
-  .portfolio-image {
+
+  /* Hero Section */
+.hero {
   position: relative;
-  width: 100%;
-  height: 280px;
-  overflow: hidden;
-  border-radius: 16px;
-}
-
-.portfolio-img {
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.portfolio-card:hover .portfolio-img {
-  transform: scale(1.08);
-}
-
-.portfolio-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6));
+  min-height: 100vh;
   display: flex;
-  align-items: flex-end;
-  padding: 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 60px;
+  overflow: hidden;
 }
 
+/* Paper Cutout Corners */
+.paper-cutout {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: #E5E7EB;
+  opacity: 0.4;
+  z-index: 0;
+}
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fffaf6;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  object-fit: contain;
+}
+
+.main-logo-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px 40px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 236, 220, 0.6),
+    transparent 70%
+  );
+}
+
+.main-logo {
+  max-width: 100%;
+  height: auto;
+  animation: fadeScale 0.8s ease forwards;
+}
+
+@keyframes fadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+.paper-cutout.top-left {
+  top: 0;
+  left: 0;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  transform: rotate(0deg);
+}
+
+.paper-cutout.top-right {
+  top: 0;
+  right: 0;
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  transform: rotate(0deg);
+}
+
+/* Handwritten Greeting */
+.handwritten-greeting {
+  position: absolute;
+  top: 140px;
+  left: 80px;
+  font-family: 'Brush Script MT', cursive, 'Comic Sans MS', cursive;
+  font-size: 48px;
+  color: #2563EB;
+  font-weight: 400;
+  transform: rotate(-5deg);
+  z-index: 10;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: rotate(-5deg) translateY(0px); }
+  50% { transform: rotate(-5deg) translateY(-10px); }
+}
+
+/* Flower Doodle */
+.flower-doodle {
+  position: absolute;
+  top: 160px;
+  right: 100px;
+  z-index: 10;
+  animation: rotate-slow 20s linear infinite;
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Polaroid Container */
+.polaroid-container {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+}
+
+/* Polaroid Photos */
+.polaroid {
+  background: white;
+  padding: 12px;
+  padding-bottom: 45px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  position: absolute;
+  width: 200px;
+  transition: all 0.3s ease;
+}
+
+.polaroid:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+.polaroid-1 {
+  transform: rotate(-8deg);
+  top: -80px;
+  right: 150px;
+}
+
+.polaroid-2 {
+  transform: rotate(5deg);
+  top: 100px;
+  right: 0;
+}
+
+.polaroid-image {
+  width: 100%;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+}
+
+.polaroid-caption {
+  text-align: center;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 16px;
+  margin-top: 12px;
+  color: #333;
+}
+
+.instagram-media {
+  width: 100% !important;
+  min-width: unset !important;
+}
+
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+
+/* Arrow connecting polaroids */
+.arrow-1 {
+  position: absolute;
+  top: 30px;
+  right: 130px;
+  animation: dash 3s ease-in-out infinite;
+}
+
+@keyframes dash {
+  0%, 100% { stroke-dashoffset: 0; }
+  50% { stroke-dashoffset: 20; }
+}
 }

@@ -62,6 +62,16 @@ const HomePage: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+  const script = document.createElement("script");
+  script.src = "https://www.instagram.com/embed.js";
+  script.async = true;
+  document.body.appendChild(script);
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
   // Fetch Data
   useEffect(() => {
     const fetchData = async () => {
@@ -104,6 +114,8 @@ const HomePage: React.FC = () => {
     { icon: '📱', title: 'Social Media', desc: 'Build communities, not followers' },
     { icon: '💻', title: 'Digital Experiences', desc: 'Interfaces that inspire' }
   ];
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
 
   const portfolio = [
     {
@@ -136,8 +148,11 @@ const HomePage: React.FC = () => {
     { number: '4+', label: 'Years of Experience' },
     { number: '75+', label: 'Happy Clients' },
     { number: '100+', label: 'Projects Completed' },
-
   ];
+
+  
+
+
 
   const instaPosts = [
     { id: 1, color: '#003DA5' },
@@ -154,76 +169,119 @@ const HomePage: React.FC = () => {
       <header className="header">
         <div className="header-content">
           <div className="logo">
-            <span className="logo-icon">🌸</span>
-            Bloom Branding
-          </div>
+  <Image
+    src="/portfolio/logo.png"
+    alt="Bloom Branding Logo"
+    width={80}
+    height={60}
+    priority
+  />
+  
+</div>
+
           <nav className="nav">
-            <a href="#home" className="nav-link">Home</a>
+            <a href="/ " className="nav-link">Home</a>
             <a href="/services" className="nav-link">Services</a>
-            <a href="#work" className="nav-link">Our Work</a>
+            <a href="/work" className="nav-link">Our Work</a>
             <a href="/founder+story" className="nav-link">About</a>
             <a href="/contact" className="nav-link">Contact</a>
           </nav>
+          <a href="/contact">
           <button className="header-btn">Brand Enquiry</button>
+          </a>
         </div>
       </header>
+      {/* Main Logo Section */}
+<section className="main-logo-section">
+  <Image
+    src="/portfolio/main-logo.png"
+    alt="Bloom Branding Main Logo"
+    width={1720}
+    height={720}
+    className="main-logo"
+    priority
+    padding-top="250px"
+  />
+</section>
 
-      {/* Floating Background */}
-      <div className="bg-shapes">
-        <div className="shape shape-1"></div>
-        <div className="shape shape-2"></div>
-        <div className="shape shape-3"></div>
-      </div>
 
-      {/* Hero Banner */}
-      <section className="hero">
-        <div className="hero-content">
-          <div
-            className="hero-tag"
-            style={{
-              transform: `translateY(${Math.min(scrollY * 0.3, 50)}px)`,
-              opacity: Math.max(0, 1 - scrollY / 400)
-            }}
-          >
-            <span className="tag-dot"></span>
-            Where Brands Bloom
-          </div>
-          <h1
-            className="hero-title"
-            style={{ transform: `translateY(${scrollY * 0.2}px)` }}
-          >
-            <span className="title-line">{heroContent.heroTitleLine1}</span>
-            <span className="title-accent">{heroContent.heroTitleAccent}</span>
-            <span className="title-line">{heroContent.heroTitleLine3}</span>
-          </h1>
-          <p
-            className="hero-subtitle"
-            style={{ opacity: Math.max(0, 1 - scrollY / 300) }}
-          >
-            {heroContent.heroSubtitle.split('\n').map((line, i) => (
-              <React.Fragment key={i}>
-                {line}
-                {i < heroContent.heroSubtitle.split('\n').length - 1 && <br />}
-              </React.Fragment>
-            ))}
-          </p>
-          <div className="hero-cta">
-            <button className="primary-btn">
-              {heroContent.ctaText}
-              <span className="btn-arrow">→</span>
-            </button>
-            <button className="secondary-btn">View Our Work</button>
-          </div>
-        </div>
+     {/* Hero Banner */}
+<section className="hero">
+  <div
+    className="hero-content"
+    style={{
+      transform: `translateY(${clamp(scrollY * 0.15, 0, 60)}px)`,
+      transition: "transform 0.2s ease-out",
+    }}
+  >
+    {/* Tag */}
+    <div
+      className="hero-tag"
+      style={{
+        transform: `translateY(${clamp(scrollY * 0.08, 0, 30)}px)`,
+        opacity: clamp(1 - scrollY / 350, 0, 1),
+        transition: "all 0.2s ease-out",
+      }}
+    >
+      <span className="tag-dot"></span>
+      Where Brands Bloom
+    </div>
 
-        {/* Animated Brand Elements */}
-        <div className="floating-elements">
-          <div className="floating-item float-1">🌱</div>
-          <div className="floating-item float-2">🌸</div>
-          <div className="floating-item float-3">✨</div>
-          <div className="floating-item float-4">🎨</div>
-        </div>
-      </section>
+    {/* Title */}
+    <h1
+      className="hero-title"
+      style={{
+        transform: `translateY(${clamp(scrollY * 0.12, 0, 50)}px)`,
+        transition: "transform 0.25s ease-out",
+      }}
+    >
+      <span className="title-line">Blooming</span>
+      <span className="title-accent">Your Brand</span>
+      <span className="title-line">Into Greatness</span>
+    </h1>
+
+    {/* Subtitle */}
+    <p
+      className="hero-subtitle"
+      style={{
+        opacity: clamp(1 - scrollY / 280, 0, 1),
+        transform: `translateY(${clamp(scrollY * 0.1, 0, 40)}px)`,
+        transition: "all 0.25s ease-out",
+      }}
+    >
+      Bringing synergy of aesthetics and expertise to help your brand bloom
+      <br />
+      we nurture your vision into a thriving brand that stands out and flourishes.
+    </p>
+
+    {/* CTA */}
+    <div
+      className="hero-cta"
+      style={{
+        transform: `translateY(${clamp(scrollY * 0.05, 0, 20)}px)`,
+        transition: "transform 0.3s ease-out",
+      }}
+    >
+      <a href="/contact">
+      <button className="primary-btn">
+        Start Your Journey <span className="btn-arrow">→</span>
+      </button>
+      </a>
+      <a href="/work">  
+      <button className="secondary-btn">View Our Work</button>
+      </a>
+    </div>
+  </div>
+
+  {/* Floating Elements */}
+  <div className="floating-elements">
+    <div className="floating-item float-1">🌱</div>
+    <div className="floating-item float-2">🌸</div>
+    <div className="floating-item float-3">✨</div>
+    <div className="floating-item float-4">🎨</div>
+  </div>
+</section>
+
 
       {/* Services Section */}
       <section className="services-section" id="services">
@@ -251,10 +309,12 @@ const HomePage: React.FC = () => {
         </div>
 
         <div className="services-footer">
+          <a href="/services">
           <button className="view-all-btn">
             Explore All Services
             <span className="btn-arrow">→</span>
           </button>
+          </a>
         </div>
       </section>
 
@@ -291,10 +351,12 @@ const HomePage: React.FC = () => {
 
 
         <div className="portfolio-footer">
+          <a href="/work">
           <button className="view-all-btn">
             View Full Portfolio
             <span className="btn-arrow">→</span>
           </button>
+          </a>
         </div>
       </section>
 
@@ -410,7 +472,7 @@ const HomePage: React.FC = () => {
           <span className="section-label">Follow Our Journey</span>
           <h2 className="section-title">
             <span className="insta-icon">📷</span>
-            @BLOOM.BRANDING on Instagram
+            @bloom.branding_ on Instagram
           </h2>
           <p className="section-subtitle">
             Daily inspiration, behind-the-scenes, and brand stories
@@ -418,27 +480,44 @@ const HomePage: React.FC = () => {
         </div>
 
         <div className="insta-grid">
-          {instaPosts.map((post) => (
-            <a
-              key={post.id}
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="insta-post"
-              style={{ backgroundColor: post.color }}
-            >
-              <div className="insta-overlay">
-                <span className="insta-icon-small">❤️</span>
-                <span className="insta-likes">1.2K</span>
-              </div>
-            </a>
-          ))}
-        </div>
+
+  <blockquote
+    className="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/reel/C62yD1UNiZf/?utm_source=ig_embed&amp;utm_campaign=loading"
+    data-instgrm-version="14"
+  ></blockquote>
+
+  <blockquote
+    className="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/reel/DMsJ2MVozcW/?utm_source=ig_embed&amp;utm_campaign=loading"
+    data-instgrm-version="14"
+  ></blockquote>
+
+  <blockquote
+    className="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/reel/C4Sybe_NrDO/?utm_source=ig_embed&amp;utm_campaign=loading"
+    data-instgrm-version="14"
+  ></blockquote>
+
+  <blockquote
+    className="instagram-media"
+    data-instgrm-permalink="https://www.instagram.com/reel/C6dtVd-NksW/?utm_source=ig_embed&amp;utm_campaign=loading"
+    data-instgrm-version="14"
+  ></blockquote>
+
+</div>
 
         <div className="insta-footer">
           <button className="insta-btn">
             <span className="insta-icon-small">📱</span>
-            Follow Us on Instagram
+            <a
+  href="https://www.instagram.com/bloom.branding_/"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Follow Us on Instagram
+</a>
+            
           </button>
         </div>
       </section>
@@ -450,10 +529,12 @@ const HomePage: React.FC = () => {
           <p className="cta-text">
             Let&apos;s cultivate something extraordinary together. Your brand&apos;s journey to greatness starts here.
           </p>
-          <button className="cta-button">
-            <span>Start Brand Enquiry</span>
-            <span className="btn-arrow">→</span>
-          </button>
+          <a href="/contact">
+            <button className="cta-button">
+              <span>Start Brand Enquiry</span>
+              <span className="btn-arrow">→</span>
+            </button>
+          </a>
         </div>
       </section>
 
@@ -486,17 +567,21 @@ const HomePage: React.FC = () => {
             </div>
             <div className="footer-col">
               <h4 className="footer-title">Company</h4>
-              <a href="#" className="footer-link">About Us</a>
-              <a href="#" className="footer-link">Our Work</a>
-              <a href="#" className="footer-link">Our Story</a>
-              <a href="#" className="footer-link">Careers</a>
-              <a href="#" className="footer-link">Contact</a>
+              <a href="/founder+story" className="footer-link">About Us</a>
+              <a href="/work" className="footer-link">Our Work</a>
+              <a href="/founder+story" className="footer-link">Our Story</a>
+              <a href="/services" className="footer-link">Services</a>
+              <a href="/contact" className="footer-link">Contact</a>
             </div>
             <div className="footer-col">
               <h4 className="footer-title">Get in Touch</h4>
               <p className="footer-text">
                 <strong>Email:</strong><br />
-                hello.bloombranding@gmail.com
+               <a href="mailto:hello.bloombranding@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">
+  Email Us
+</a>
+
+                
               </p>
               <p className="footer-text">
                 <strong>Phone:</strong><br />
@@ -504,7 +589,7 @@ const HomePage: React.FC = () => {
               </p>
               <p className="footer-text">
                 <strong>Location:</strong><br />
-                123 Creative Street, Design City
+                Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007
               </p>
             </div>
           </div>

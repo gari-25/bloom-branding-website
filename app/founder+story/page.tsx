@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef} from "react";
 import styles from "./FounderStory.module.css";
+import Link from "next/link";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -29,9 +30,9 @@ const FounderStory: React.FC = () => {
     bioParagraph2: "With over 15 years in the creative industry, I've had the privilege of working with startups finding their voice and established brands rediscovering their purpose.",
     bioParagraph3: "At Bloom Branding, we've created a space where creativity flourishes, where ideas are nurtured, and where every project is an opportunity to make something beautiful and meaningful.",
     imageUrl: "",
-    statExperience: "15+",
-    statBrands: "200+",
-    statAwards: "50+",
+    statExperience: "4+",
+    statBrands: "100+",
+    statAwards: "75+",
   });
 
   useEffect(() => {
@@ -52,6 +53,13 @@ const FounderStory: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+const navLinkStyle = (scrollY: number) => ({
+  color: scrollY > 50 ? "#fff" : "#ccc",
+  textDecoration: "none",
+  fontSize: "1rem",
+  fontWeight: 500,
+  transition: "color 0.3s ease",
+});
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -93,27 +101,50 @@ const FounderStory: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <header className="site-header">
-        <div className="header-inner">
-          {/* Logo */}
-          <div className="header-logo">
-            <span className="logo-flower">🌸</span>
-            <span className="logo-text">Bloom Branding</span>
+    {/* Header */}
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        background: scrollY > 50 ? '#624A41' : 'transparent',
+        backdropFilter: scrollY > 50 ? 'blur(10px)' : 'none',
+        transition: 'all 0.3s ease',
+        borderBottom: scrollY > 50 ? '1px solid rgba(244, 232, 178, 0.2)' : 'none'
+      }}>
+        <div style={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          padding: '1.5rem 2rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem'
+          }}>
+           
+            <span style={{
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              color: scrollY > 50 ? '#F4E8B2' : '#4A4A4A',
+              transition: 'color 0.3s ease'
+            }}>
+              Bloom Branding
+            </span>
           </div>
+          
+         <nav style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
+          <Link href="/" style={navLinkStyle(scrollY)}>Home</Link>
+  <Link href="/services" style={navLinkStyle(scrollY)}>Services</Link>
+  <Link href="/founder+story" style={navLinkStyle(scrollY)}>About</Link>
+  <Link href="/work" style={navLinkStyle(scrollY)}>Work</Link>
+  <Link href="/contact" style={navLinkStyle(scrollY)}>Contact</Link>
+</nav>
 
-          {/* Navigation */}
-          <nav className="header-nav">
-            <a href="/ " className="nav-item">Home</a>
-            <a href="/services" className="nav-item">Services</a>
-            <a href="/work" className="nav-item">Our Work</a>
-            <a href="/founder+story" className="nav-item">About</a>
-            <a href="/contact" className="nav-item">Contact</a>
-          </nav>
-
-          {/* CTA */}
-          <a href="/contact" className="header-cta">
-            Brand Enquiry
-          </a>
         </div>
       </header>
 
@@ -162,7 +193,7 @@ const FounderStory: React.FC = () => {
               In 2020, amidst a world in transformation, Bloom Branding was born from a simple yet powerful belief: every brand deserves to flourish. What started as a small studio with big dreams has grown into a creative powerhouse, helping businesses of all sizes find their unique voice and visual identity.
             </p>
             <p className={styles.paragraph}>
-              Like a garden tended with care, we've cultivated our craft, learning, evolving, and blooming alongside our clients. Each project is a new seed planted, each success story a flower that adds to our ever-growing garden.
+              Like a garden tended with care, we&aposve cultivated our craft, learning, evolving, and blooming alongside our clients. Each project is a new seed planted, each success story a flower that adds to our ever-growing garden.
             </p>
           </div>
         </div>
@@ -183,7 +214,7 @@ const FounderStory: React.FC = () => {
           <span className={styles.sectionLabel}>Our Philosophy</span>
           <h2 className={styles.sectionTitleLight}>Blooming the Brand</h2>
           <p className={styles.philosophyText}>
-            We don't just design brands—we nurture them. Like a gardener who understands that each plant needs unique care, we recognize that every brand has its own rhythm, its own story, its own time to bloom.
+            We don&apost just design brands—we nurture them. Like a gardener who understands that each plant needs unique care, we recognize that every brand has its own rhythm, its own story, its own time to bloom.
           </p>
           <div className={styles.philosophyGrid}>
             <div className={styles.philosophyCard}>
@@ -275,7 +306,7 @@ const FounderStory: React.FC = () => {
               </div>
               <div className={styles.stat}>
                 <div className={styles.statNumber}>{content.statAwards}</div>
-                <div className={styles.statLabel}>Awards Won</div>
+                <div className={styles.statLabel}>Happy Clients</div>
               </div>
             </div>
           </div>
@@ -387,7 +418,7 @@ const FounderStory: React.FC = () => {
               <h4 className="footer-title">Get in Touch</h4>
               <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
               <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
-              <p className="footer-text"><strong>Location:</strong><br />123 Creative Street, Design City</p>
+              <p className="footer-text"><strong>Location:</strong><br />Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007</p>
             </div>
           </div>
 
