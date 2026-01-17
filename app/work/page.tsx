@@ -1,62 +1,49 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { db } from "@/lib/firebase";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-
-interface Testimonial {
-  id: string;
-  name: string;
-  company: string;
-  content: string;
-  rating: number;
-  videoUrl?: string;
-  type: "text" | "video";
-  isActive: boolean;
-}
-
-interface Brand {
-  id: string;
-  name: string;
-  logoUrl: string;
-  website: string;
-  isActive: boolean;
-}
-
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [brands, setBrands] = useState<Brand[]>([]);
 
-  // Fetch data from Firebase
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch testimonials
-        const testimonialsSnap = await getDocs(collection(db, "testimonials"));
-        const fetchedTestimonials = testimonialsSnap.docs
-          .map(doc => ({ id: doc.id, ...doc.data() } as Testimonial))
-          .filter(t => t.isActive);
-        
-        if (fetchedTestimonials.length > 0) {
-          setTestimonials(fetchedTestimonials);
-        }
-
-        // Fetch brands
-        const brandsSnap = await getDocs(collection(db, "brands"));
-        const fetchedBrands = brandsSnap.docs
-          .map(doc => ({ id: doc.id, ...doc.data() } as Brand))
-          .filter(b => b.isActive);
-        
-        setBrands(fetchedBrands);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  // Mock testimonials data - in real app, fetch from backend
+  const testimonials = [
+    {
+      id: 1,
+      name: "Mansi Nagdev",
+      role: "CEO, TechStart Inc.",
+      
+      text: "The bloom branding team is really hardworking and efficient. I am associated with bloom since more than a year now and they have taken my brand’s page from 20k followers to 50k + followers. Looking forward to touching 100k followers and many more effective collabs together. So wish they were in my city though to really make organic content for me as I suck at it myself.",
+      rating: 5,
+      type: "text"
+    },
+    {
+      id: 2,
+      name: "Purva Shah",
+      role: "Marketing Director, GrowthCo",
+      
+      text: "Great work done by these people! One stop for all the assistance needed for digital marketing related work. The employees and all the staff here provide all the guidance to the best of your satisfaction.",
+      rating: 5,
+      type: "text"
+    },
+    {
+      id: 3,
+      name: "Nishant Shah",
+      role: "Founder, StyleHub",
+      
+      text: "I’ve been working with Bloom for past 4-5 months and my experience with them has been great! Both the founders are very creative and also the team is flexible managing shoot timings and dates and accommodating special requests needed be! I’d recommend you take that meeting :)",
+      rating: 4,
+      type: "text"
+    },
+    {
+      id: 4,
+      name: "Shwet Tejani",
+      role: "CMO, BrandVision",
+      
+      text: "It was such a nice experience working with Bloom Branding. The way they measure every single detail is amazing, and apart from that, it really helped my business. Keep it up, Bloom Branding and team, and thank you.",
+      rating: 5,
+      type: "text"
+    }
+  ];
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -168,13 +155,11 @@ const Testimonials = () => {
   margin-bottom: 10px;
 }
 
-.footer-text, .footer-text a {
+.footer-text {
   font-size: 14px;
   color: rgba(251, 247, 244, 0.7);
   line-height: 1.6;
-  text-decoration: none;
 }
-
 
 .footer-link {
   font-size: 14px;
@@ -933,7 +918,7 @@ const Testimonials = () => {
                 >
                   <div className="quote-icon">"</div>
                   <div className="testimonial-content">
-                    <p className="testimonial-text">{testimonial.content}</p>
+                    <p className="testimonial-text">{testimonial.text}</p>
                     <div className="testimonial-rating">
                       {renderStars(testimonial.rating)}
                     </div>
@@ -941,7 +926,7 @@ const Testimonials = () => {
                      
                       <div className="author-info">
                         <h4 className="author-name">{testimonial.name}</h4>
-                        <p className="author-role">{testimonial.company}</p>
+                        <p className="author-role">{testimonial.role}</p>
                       </div>
                     </div>
                   </div>
@@ -991,29 +976,33 @@ const Testimonials = () => {
     </p>
 
     <div className="brands-grid">
-      {brands.length > 0 ? (
-        brands.map((brand) => (
-          <div className="brand-card" key={brand.id}>
-            {brand.logoUrl ? (
-              <Image
-                src={brand.logoUrl}
-                alt={brand.name}
-                width={140}
-                height={80}
-              />
-            ) : (
-              <span className="brand-placeholder">{brand.name}</span>
-            )}
-          </div>
-        ))
-      ) : (
-        <p className="no-brands">No brands added yet.</p>
-      )}
+      {[
+        "/portfolio/ambc.png",
+        "/portfolio/binal.png",
+        "/portfolio/cafewhiteeye.png",
+        "/portfolio/dhruv.png",
+        "/portfolio/lifebeach.png",
+        "/portfolio/izarah.png",
+        "/portfolio/tiffinbox.png",
+        "/portfolio/petra.png",
+        "/portfolio/mansi.png",
+        "/portfolio/manisha.png",
+        "/portfolio/subhrekha.png",
+      ].map((logo, index) => (
+        <div className="brand-card" key={index}>
+          <Image
+            src={logo}
+            alt="Brand Logo"
+            width={140}
+            height={80}
+          />
+        </div>
+      ))}
     </div>
   </div>
 </section>
 
-      {/* Footer */}
+            {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-grid">
@@ -1052,8 +1041,8 @@ const Testimonials = () => {
               <h4 className="footer-title">Get in Touch</h4>
               <p className="footer-text">
                 <strong>Email:</strong><br />
-               <a href="mailto:bloombranding2000@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">
-  bloombranding2000@gmail.com
+               <a href="mailto:hello.bloombranding@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">
+  Email Us
 </a>
 
                 
