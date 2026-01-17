@@ -137,15 +137,15 @@ const ServicesPage: React.FC = () => {
     sectionRefs.current[0]?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const parallaxX = (mousePos.x / window.innerWidth - 0.5) * 50;
-  const parallaxY = (mousePos.y / window.innerHeight - 0.5) * 50;
-const navLinkStyle = (scrollY: number) => ({
-  color: scrollY > 50 ? '#E8E4D9' : '#4A4A4A',
-  textDecoration: 'none',
-  fontSize: '1rem',
-  fontWeight: 500,
-  transition: 'all 0.3s ease',
-});
+  const parallaxX = typeof window !== 'undefined' ? (mousePos.x / window.innerWidth - 0.5) * 50 : 0;
+  const parallaxY = typeof window !== 'undefined' ? (mousePos.y / window.innerHeight - 0.5) * 50 : 0;
+  const navLinkStyle = (scrollY: number) => ({
+    color: scrollY > 50 ? '#E8E4D9' : '#4A4A4A',
+    textDecoration: 'none',
+    fontSize: '1rem',
+    fontWeight: 500,
+    transition: 'all 0.3s ease',
+  });
 
   return (
     <div style={{ 
