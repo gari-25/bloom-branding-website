@@ -235,9 +235,9 @@ const clamp = (value: number, min: number, max: number) =>
         transition: "transform 0.25s ease-out",
       }}
     >
-      <span className="title-line">Blooming</span>
-      <span className="title-accent">Your Brand</span>
-      <span className="title-line">Into Greatness</span>
+      <span className="title-line">{heroContent.heroTitleLine1}</span>
+      <span className="title-accent">{heroContent.heroTitleAccent}</span>
+      <span className="title-line">{heroContent.heroTitleLine3}</span>
     </h1>
 
     {/* Subtitle */}
@@ -249,9 +249,12 @@ const clamp = (value: number, min: number, max: number) =>
         transition: "all 0.25s ease-out",
       }}
     >
-      Bringing synergy of aesthetics and expertise to help your brand bloom
-      <br />
-      we nurture your vision into a thriving brand that stands out and flourishes.
+      {heroContent.heroSubtitle.split('\n').map((line, index) => (
+        <React.Fragment key={index}>
+          {line}
+          {index < heroContent.heroSubtitle.split('\n').length - 1 && <br />}
+        </React.Fragment>
+      ))}
     </p>
 
     {/* CTA */}
@@ -264,7 +267,7 @@ const clamp = (value: number, min: number, max: number) =>
     >
       <a href="/contact">
       <button className="primary-btn">
-        Start Your Journey <span className="btn-arrow">→</span>
+        {heroContent.ctaText} <span className="btn-arrow">→</span>
       </button>
       </a>
       <a href="/work">  
@@ -577,7 +580,7 @@ const clamp = (value: number, min: number, max: number) =>
               <h4 className="footer-title">Get in Touch</h4>
               <p className="footer-text">
                 <strong>Email:</strong><br />
-               <a href="mailto:hello.bloombranding@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">
+               <a href="mailto:bloombranding2000@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">
   Email Us
 </a>
 

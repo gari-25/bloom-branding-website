@@ -416,14 +416,14 @@ const navLinkStyle = (scrollY: number) => ({
 
             <div className="footer-col">
               <h4 className="footer-title">Get in Touch</h4>
-              <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
+              <p className="footer-text"><strong>Email:</strong><a href="mailto:bloombranding2000@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">bloombranding2000@gmail.com</a></p>
               <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
               <p className="footer-text"><strong>Location:</strong><br />Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007</p>
             </div>
           </div>
 
           <div className="footer-bottom">
-            <p className="copyright">© 2026 Bloom Branding. All rights reserved.</p>
+            <p className="copyright"> 2026 Bloom Branding. All rights reserved.</p>
             <div className="footer-links">
               <a href="#" className="footer-bottom-link">Privacy Policy</a>
               <span className="footer-divider">|</span>
@@ -466,10 +466,11 @@ const navLinkStyle = (scrollY: number) => ({
   letter-spacing: 0.08em;
 }
 
-.footer-text {
+.footer-text , .footer-text a{
   color: #E8E4D9;
   line-height: 1.6;
   font-size: 0.95rem;
+  text-decoration: none;
 }
 
 .footer-link {

@@ -5,6 +5,7 @@ import styles from "./ContactPage.module.css";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import Image from "next/image";
+
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -253,9 +254,20 @@ const ContactPage: React.FC = () => {
 
             <div className="footer-col">
               <h4 className="footer-title">Get in Touch</h4>
-              <p className="footer-text"><strong>Email:</strong><br />hello.bloombranding@gmail.com</p>
-              <p className="footer-text"><strong>Phone:</strong><br />97270 68674 | 99095 11226</p>
-              <p className="footer-text"><strong>Location:</strong><br />Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007</p>
+              <p className="footer-text">
+                <strong>Email:</strong><br />
+                <a href="mailto:bloombranding2000@gmail.com?subject=Brand Inquiry&body=Hello Bloom Team,">
+                  bloombranding2000@gmail.com
+                </a>
+              </p>
+              <p className="footer-text">
+                <strong>Phone:</strong><br />
+                97270 68674 | 99095 11226
+              </p>
+              <p className="footer-text">
+                <strong>Location:</strong><br />
+                Solarium Business Centre, 515, beside Times Corner, Surat, Gujarat 395007
+              </p>
             </div>
           </div>
 
@@ -269,96 +281,6 @@ const ContactPage: React.FC = () => {
               <a href="#" className="footer-bottom-link">Cookie Policy</a>
             </div>
           </div>
-          <style>{`
-.footer {
-  background: #624A41;
-  color: #E8E4D9;
-  padding: 4rem 2rem 2rem;
-}
-
-.footer-content {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 3rem;
-}
-
-.footer-logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.logo-icon {
-  margin-right: 0.5rem;
-}
-
-.footer-title {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  color: #F4E8B2;
-  letter-spacing: 0.08em;
-}
-
-.footer-text {
-  color: #E8E4D9;
-  line-height: 1.6;
-  font-size: 0.95rem;
-}
-
-.footer-link {
-  display: block;
-  color: #E8E4D9;
-  text-decoration: none;
-  margin-bottom: 0.6rem;
-  transition: color 0.3s ease;
-}
-
-.footer-link:hover {
-  color: #F4E8B2;
-}
-
-.social-icons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.2rem;
-}
-
-.social-icon {
-  font-size: 1.2rem;
-  text-decoration: none;
-}
-
-.footer-bottom {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(244,232,178,0.2);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer-bottom-link {
-  color: #E8E4D9;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.footer-divider {
-  margin: 0 0.5rem;
-  opacity: 0.5;
-}
-
-.copyright {
-  font-size: 0.85rem;
-  opacity: 0.8;
-}
-`}</style>
-
         </div>
       </footer>
     </div>
